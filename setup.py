@@ -83,6 +83,7 @@ def settimecode():#time code is used for saving the files with different names a
         return code
         
 def main():
+    print(dir(mice))
     headers = ["Timestamp","Position X","Position Y"]
 
     folder = "data/"
