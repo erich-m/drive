@@ -97,6 +97,8 @@ def main():
     posx = mice.vehicles.values()[0].pos[0]
 
     posy = eval("mice.vehicles.values()[0].pos[1]")
+
+    #TODO: Set up json reader to get the data from the include.json and get headers and functions and parameters
     
     writer.writedata({"Timestamp":timestamp,"Position X":posx,"Position Y":posy})
 

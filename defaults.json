@@ -222,429 +222,439 @@
             0
         ]
     },
-    "getBRakesTemperature":{
-        "name":"Brake Temperature",
-        "function":"mice.getBrakeTemperature(%s)",
+    "getClutchPedal":{
+        "name":"Clutch Pedal",
+        "function":"mice.getClutchPedal(%s)",
         "class":"Vehicle",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getCollisionState":{
+        "name":"Collision State",
+        "function":"mice.getollisionState(%s)",
+        "class":"Vehicle",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getConsumption":{
+        "name":"Fuel Consumption",
+        "function":"mice.getConsumption(%s)",
+        "class":"Vehicle",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getDisappearBackRadius":{
+        "name":"Disappear Radius (Behind)",
+        "function":"mice.getDisappearBackRadius(%s)",
+        "class":"Swarm",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getDisappearFrontRadius":{
+        "name":"Disappear Radius (Front)",
+        "function":"mice.getDisappearFrontRadius(%s)",
+        "class":"Swarm",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getDistanceToNextIntersection":{
+        "name":"Distance to Next Intersection",
+        "function":"mice.getDistanceToNextIntersection(%s)",
+        "class":"Position",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getDistanceToNextVehicle":{
+        "name":"Distance To Next Vehicle",
+        "function":"mice.getDistanceToNextVehicle(%s)",
+        "class":"Position",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getEngineRPM":{
+        "name":"RPMs",
+        "function":"mice.getEngineRPM(%s)",
+        "class":"Vehicle",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getEngineState":{
+        "name":"Engine State",
+        "function":"mice.getEngineState(%s)",
+        "class":"Vehicle",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getFastLane":{
+        "name":"Fast Lane",
+        "function":"mice.getFastLane(%s)",
+        "class":"Road",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getFogLights":{
+        "name":"Fog Lights State",
+        "function":"mice.getFogLights(%s)",
+        "class":"Vehicle",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getFrontAppearFactor":{
+        "name":"Appear Factor (Front)",
+        "function":"mice.getAppearFrontAppearFactor(%s)",
+        "class":"Swarm",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getGearbox":{
+        "name":"Gear Lever Position",
+        "function":"mice.getGearbox(%s)",
+        "class":"Vehicle",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getGearEngaged":{
+        "name":"Engine Gear",
+        "function":"mice.getGearEngaged(%s)",
+        "class":"Vehicle",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getHeadlights":{
+        "name":"Headlights State",
+        "function":"mice.getHeadLights(%s)",
+        "class":"Vehicle",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getHorn":{
+        "name":"Horn State",
+        "function":"mice.getHorn(%s)",
+        "class":"Vehicle",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getIgnitionKey":{
+        "name":"Ignition Key Position",
+        "function":"mice.getIgnitionKey(%s)",
+        "class":"Vehicle",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getIndicators":{
+        "name":"Turn Signal State",
+        "function":"mice.getIndicators(%s)",
+        "class":"Vehicle",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getLane":{
+        "name":"Lane Number",
+        "function":"mice.getLane(%s)",
+        "class":"Road",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getLaneCirculationWay":{
+        "name":"Lane Direction",
+        "function":"mice.getLaneCirculationWay",
+        "class":"Road",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getLaneTypeVehicle":{
+        "name":"Lane Type (Vehicle)",
+        "function":"mice.getLaneTypeVehicle(%s)",
+        "class":"Road",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getNextIntersectionDirection":{
+        "name":"Next Intersection Direction",
+        "function":"mice.getNextIntersectionDirection(%s)",
+        "class":"Road",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getNextVehicleInPath":{
+        "name":"Next Vehicle In Path",
+        "function":"mice.getNextVehicleInPath(%s)",
+        "class":"Road",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getOutOfRoadState":{
+        "name":"Out of Road State",
+        "function":"mice.getOutOfRoadState(%s)",
+        "class":"Road",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getParkingBrake":{
+        "name":"Parking Brake Position",
+        "function":"mice.getParkingBreak(%s)",
+        "class":"Road",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getPhysicsCollidedEntityType":{
+        "name":"Collision Entity",
+        "function":"mice.getPhysicsCollidedEntityType",
+        "class":"Vehicle",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getPollution":{
+        "name":"Pollution",
+        "function":"mice.getPollution(%s)",
+        "class":"Vehicle",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getPositionVectorX":{
+        "name":"Position X",
+        "function":"mice.getPositionVector(%s,0)",
+        "class":"Position",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getPositionVectorY":{
+        "name":"Position Y",
+        "function":"mice.getPositionVector(%s,1)",
+        "class":"Position",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getPositionVectorZ":{
+        "name":"Position Z",
+        "function":"mice.getPositionVector(%s,2)",
+        "class":"Position",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getQueenIdentifier":{
+        "name":"Queen Identifier",
+        "function":"mice.getQueenIdentifier(%s)",
+        "class":"Swarm",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getRoadIdentifier":{
+        "name":"Road Identifier",
+        "function":"mice.getRoadIdentifier(%s)",
+        "class":"Road",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getRobotizedGearBoxMode":{
+        "name":"Vehicle Transmission",
+        "function":"mice.getRobotizedGearBoxMode(%s)",
+        "class":"Vehicle",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getSafetyDistance":{
+        "name":"Safety Distance",
+        "function":"mice.getSafetyDistance(%s)",
+        "class":"Vehicle",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getSafetyTime":{
+        "name":"Safety Time",
+        "function":"mice.getSafetyTime(%s)",
+        "class":"Vehicle",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getSlowLane":{
+        "name":"Slow Lane",
+        "function":"mice.getSlowLane(%s)",
+        "class":"Road",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getSpeed":{
+        "name":"Speed",
+        "function":"mice.getSpeed(%s)",
+        "class":"Position",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getSpeedVectorX":{
+        "name":"Speed X",
+        "function":"mice.getSpeedVector(%s,0)",
+        "class":"Position",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getSpeedVectorY":{
+        "name":"Speed Y",
+        "function":"mice.getSpeedVector(%s,1)",
+        "class":"Position",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getSpeedVectorZ":{
+        "name":"Speed Z",
+        "function":"mice.getSpeedVector(%s,2)",
+        "class":"Position",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getSpeedLimit":{
+        "name":"Speed Limit",
+        "function":"mice.getSpeedLimit(%s)",
+        "class":"Road",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getSteeringWheel":{
+        "name":"Steering Wheel Angle",
+        "function":"mice.getSteeringWheel(%s)",
+        "class":"Vehicle",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getTripMeter":{
+        "name":"Trip Meter",
+        "function":"mice.getTripMeter(%s)",
+        "class":"Position",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getWarnings":{
+        "name":"Warning Lights State",
+        "function":"mice.getWarnings(%s)",
+        "class":"Vehicle",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
+    "getExportedChannel":{
+        "name":"Channel",
+        "function":"mice.getExportedChannel(%s)",
+        "class":"Tools",
         "argc":1,
         "argv":[
             0
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
-        "argc":1,
+    "getCartesianDistance":{
+        "name":"Cartesian Distance",
+        "function":"mice.getCartesianDistance(%s,%s)",
+        "class":"Vehicle",
+        "argc":2,
         "argv":[
-            0
+            0,
+            1
         ]
     },
-    "":{
-        "name":"",
-        "function":"",
-        "class":"",
-        "argc":1,
+    "getCurvilignDistance":{
+        "name":"Curvilign Distance",
+        "function":"mice.getCurvilignDistance(%s,%s)",
+        "class":"Vehicle",
+        "argc":2,
         "argv":[
-            0
+            0,
+            1
         ]
     },
-    
-    
+    "getGraphDistance":{
+        "name":"Warning Lights State",
+        "function":"mice.getGraphDistance(%s,%s)",
+        "class":"Vehicle",
+        "argc":2,
+        "argv":[
+            0,
+            1
+        ]
+    }
   }
