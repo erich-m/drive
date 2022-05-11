@@ -91,19 +91,20 @@ def main():
     print("info: ",sys.version_info)
     print("path: ",sys.executable)
 
+
     config = ConfigParser.ConfigParser()
     config.read("M:/SCANeRstudio_1.6/data/GUELPH_DATA_1.6/script/python/settings.cfg")
 
     headers = ["Timestamp","Position X","Position Y"]
 
-    folder = config.get('general','folder')
-    name = config.get('name')
+    folder = config.get('fixed','folder')
+    name = config.get('general','name')
     code = settimecode()
     
-    suffix = config.get('suffix')
+    suffix = config.get('fixed','suffix')
     file = folder + name + "-" + code + suffix
     
-    writer = customcsv(file,config.get('general','delim'),headers)#create the new csv file
+    writer = customcsv(file,config.get('fixed','delim'),headers)#create the new csv file
 
     writer.writeheaders()#write the headers
 

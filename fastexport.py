@@ -3,6 +3,8 @@
 import mice#for scaner studio functions
 import os #use for path navigation
 
+import ConfigParser
+
 # import customcsv as csvw
 #path: C:\OKTAL\SCANeRstudio_1.6\bin\x64
 
@@ -75,19 +77,22 @@ def gettimecode():#retrieves the values fromt he variables to get the right code
     return code
 
 def main():
+    config = ConfigParser.ConfigParser()
+    config.read("M:/SCANeRstudio_1.6/data/GUELPH_DATA_1.6/script/python/settings.cfg")
+
     headers = ["Timestamp","Position X","Position Y"]
 
-    folder = "data/"
-    name = "test"
+    folder = config.get('fixed','folder')
+    name = config.get('general','name')
     code = gettimecode()
 
     if code == -1:
         return code
 
-    suffix = ".csv"
+    suffix = config.get('fixed','suffix')
     file = folder + name + "-" + code + suffix
 
-    writer = customcsv(file,";",headers)
+    writer = customcsv(file,config.get('fixed','delim'),headers)
     timestamp = mice.getScenarioClock()
     posx = mice.vehicles.values()[0].pos[0]
     posy = mice.vehicles.values()[0].pos[1]
