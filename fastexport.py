@@ -95,7 +95,8 @@ def main():
     writer = customcsv(file,config.get('fixed','delim'),headers)
     timestamp = mice.getScenarioClock()
     posx = mice.vehicles.values()[0].pos[0]
-    posy = mice.vehicles.values()[0].pos[1]
+
+    posy = eval("mice.vehicles.values()[0].pos[1]")
     
     writer.writedata({"Timestamp":timestamp,"Position X":posx,"Position Y":posy})
 

@@ -8,6 +8,7 @@ from datetime import datetime as dt
 import sys
 
 import ConfigParser
+import json
 
 # import customcsv as csvw
 #path: C:\OKTAL\SCANeRstudio_1.6\bin\x64
@@ -88,12 +89,21 @@ def settimecode():#time code is used for saving the files with different names a
         return code
         
 def main():
-    print("info: ",sys.version_info)
-    print("path: ",sys.executable)
+    print("python version: ",sys.version_info)
+    print("python path: ",sys.executable)
 
 
     config = ConfigParser.ConfigParser()
     config.read("M:/SCANeRstudio_1.6/data/GUELPH_DATA_1.6/script/python/settings.cfg")
+
+    vals = [0,1]
+    command = "mice.getPositionVector(%s,%s)"
+
+    exex = command % tuple(vals)
+    print(exex)
+    posy = eval(exex)
+
+    print(posy)
 
     headers = ["Timestamp","Position X","Position Y"]
 
