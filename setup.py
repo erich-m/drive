@@ -5,9 +5,9 @@ import os #use for path navigation
 
 from datetime import datetime as dt
 
-import platform
+import sys
 
-import Tkinter as tk
+import ConfigParser
 
 # import customcsv as csvw
 #path: C:\OKTAL\SCANeRstudio_1.6\bin\x64
@@ -88,20 +88,22 @@ def settimecode():#time code is used for saving the files with different names a
         return code
         
 def main():
-    print("Python version: ",platform.python_version())
+    print("info: ",sys.version_info)
+    print("path: ",sys.executable)
 
-
+    config = ConfigParser.ConfigParser()
+    config.read("M:/SCANeRstudio_1.6/data/GUELPH_DATA_1.6/script/python/settings.cfg")
 
     headers = ["Timestamp","Position X","Position Y"]
 
-    folder = "data/"
-    name = "test"
+    folder = config.get('general','folder')
+    name = config.get('name')
     code = settimecode()
     
-    suffix = ".csv"
+    suffix = config.get('suffix')
     file = folder + name + "-" + code + suffix
     
-    writer = customcsv(file,";",headers)#create the new csv file
+    writer = customcsv(file,config.get('general','delim'),headers)#create the new csv file
 
     writer.writeheaders()#write the headers
 
