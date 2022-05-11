@@ -1,3 +1,4 @@
+#python version 2.7.11
 #coding: UTF-8
 import mice#for scaner studio functions
 import os #use for path navigation

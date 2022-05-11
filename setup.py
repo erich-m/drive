@@ -1,8 +1,13 @@
+#python version 2.7.11
 #coding: UTF-8
 import mice#for scaner studio functions
 import os #use for path navigation
 
 from datetime import datetime as dt
+
+import platform
+
+import Tkinter as tk
 
 # import customcsv as csvw
 #path: C:\OKTAL\SCANeRstudio_1.6\bin\x64
@@ -83,7 +88,10 @@ def settimecode():#time code is used for saving the files with different names a
         return code
         
 def main():
-    print(dir(mice))
+    print("Python version: ",platform.python_version())
+
+
+
     headers = ["Timestamp","Position X","Position Y"]
 
     folder = "data/"
@@ -98,5 +106,4 @@ def main():
     writer.writeheaders()#write the headers
 
     writer.writerclose()#close the file
-
     return 1#return 1 on success
