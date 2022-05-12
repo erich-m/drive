@@ -6,7 +6,6 @@ import os #use for path navigation
 import ConfigParser
 import json
 
-# import customcsv as csvw
 #path: C:\OKTAL\SCANeRstudio_1.6\bin\x64
 
 class customcsv:#custom csv writer to write to csv without extra newline characters
@@ -68,21 +67,29 @@ def main():
     config.read("M:/SCANeRstudio_1.6/data/GUELPH_DATA_1.6/script/python/settings.cfg")
     
     #*Headers are the function names that are in the include.json
+    """ 1. open the json file "include.json", which contains the functions and the set parameters for the data collection
+        2. load the file as a python dictionary with the json.loads function which contains keys (scaner function names) 
+        and values (name, function call, class, argument count and arguments to format into string)
+        3. convert the dictionary of function key/value pairs into a list of function definitions
+        4. iterate through the list of function definitions. for each definition, get the value by 
+        the key "name" and create a list of all the names, only if the key exists (which it should unless it is changed in the future"""
     included = (json.load(open(config.get('paths','included')))).values()
     headers = [h["name"] for h in included if "name" in h]
 
-    file = config.get('paths','code')#read from the config file for the csv code
+    file = config.get('paths','datafile')#read from the config file for the csv code
 
     writer = customcsv(file,config.get('fixed','delim'),headers)
 
+    """ Similar to above...instead of getting the values at the key "name", the values from "function" key
+    are retrieved and then formatted using % tuple(list) method to replace %s indicators in the function. The list
+    comes from the value at key "argv"...only if both fields are in the dictionary (which they should be unless the code is changed
+    map then applies the python function "eval" to each of the function calls in the "calls" array """
     calls = [(f["function"] % tuple(f["argv"])) for f in included if ("function" in f and "argv" in f)]#call
     results = map(eval,calls)
-
+    #take the header and the results and join the arrays into a key value pair 
     data = dict(zip(headers,results))
 
-    #TODO: Set up json reader to get the data from the include.json and get headers and functions and parameters
-    
-    writer.writedata(data)
-
+    writer.writedata(data)#write the data to the csv using class method
     writer.writerclose()
+
     return 1#return 1 on success

@@ -10,7 +10,6 @@ import sys
 import ConfigParser
 import json
 
-# import customcsv as csvw
 #path: C:\OKTAL\SCANeRstudio_1.6\bin\x64
 
 class customcsv:#custom csv writer to write to csv without extra newline characters
@@ -26,8 +25,8 @@ class customcsv:#custom csv writer to write to csv without extra newline charact
         self.__writercreate()#create the writer by opening the file
 
     def __initpath(self):#ensure the path is set to the correct location
-        if str(os.getcwd()) != 'M:\\SCANeRstudio_1.6\\data\\GUELPH_DATA_1.6\\script\\python':#this is the path that
-            os.chdir('M:\\SCANeRstudio_1.6\\data\\GUELPH_DATA_1.6\\script\\python')
+        if str(os.getcwd()) != 'M:\\SCANeRstudio_1.6\\data\\GUELPH_DATA_1.6\\script\\python':
+            os.chdir('M:\\SCANeRstudio_1.6\\data\\GUELPH_DATA_1.6\\script\\python')#this is the path that the python directory should be working from
 
     def __writercreate(self):
         try:#attempt to open the designated file and then set the open state to True for the instance
@@ -82,16 +81,21 @@ def settimecode():#time code is used for saving the files with different names a
         #TODO: Write file name to config file as "most recent" and get rid of vairables in scaner script
 
 def main():
+    #debug print python details
     print("python version: ",sys.version_info)
     print("python path: ",sys.executable)
 
-
+    #create configparser to read the settings and standards from the configuration file
     config = ConfigParser.ConfigParser()
     config.read("M:/SCANeRstudio_1.6/data/GUELPH_DATA_1.6/script/python/settings.cfg")
     
-    #TODO: Create JSON Reader to read data from the include.json file and then get the headers
-
     #*Headers are the function names that are in the include.json
+    """ 1. open the json file "include.json", which contains the functions and the set parameters for the data collection
+        2. load the file as a python dictionary with the json.loads function which contains keys (scaner function names) 
+        and values (name, function call, class, argument count and arguments to format into string)
+        3. convert the dictionary of function key/value pairs into a list of function definitions
+        4. iterate through the list of function definitions. for each definition, get the value by 
+        the key "name" and create a list of all the names, only if the key exists (which it should unless it is changed in the future"""
     included = (json.load(open(config.get('paths','included')))).values()
     headers = [h["name"] for h in included if "name" in h]
 
@@ -102,14 +106,14 @@ def main():
     suffix = config.get('fixed','suffix')#get file type from config
     file = folder + name + "-" + code + suffix
     
-    filepath = config.get('paths','recent') + file
-    print(filepath)
 
     writer = customcsv(file,config.get('fixed','delim'),headers)#create the new csv file
     writer.writeheaders()#write the headers
     writer.writerclose()#close the file
 
-
-    
+    filepath = config.get('paths','recent') + file#get full path for the csv file
+    config.set('paths','datafile',filepath)#set to the datapth field in the cfg file
+    with open(config.get('paths','configuration'),'w') as settings:
+        config.write(settings)#write the new file name to the settings file
 
     return 1#return 1 on success
