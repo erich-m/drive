@@ -107,30 +107,30 @@ def main():
         name = config.get('general','name')#get file name from config
         code = settimecode()#get timestamp for file name
         suffix = config.get('fixed','suffix')#get file type from config
-        file = folder + name + "-" + code + suffix
+        prepfile = folder + name + "-" + code + suffix#get the csv file that is set up
 
-        writer = customcsv(file,config.get('fixed','delim'),headers)#create the new csv file
+        writer = customcsv(prepfile,config.get('fixed','delim'),headers)#create the new csv file
         writer.writeheaders()#write the headers
 
-        filepath = config.get('paths','recent') + file#get full path for the csv file
+        filepath = config.get('paths','recent') + prepfile#get full path for the csv file
         config.set('paths','datafile',filepath)#set to the datapth field in the cfg file
         with open(config.get('paths','configuration'),'w') as settings:
             config.write(settings)#write the new file name to the settings file
-    else:
-        file = config.get('paths','datafile')#read from the config file for the csv code
+    #run export procedures to get the data from the simulation and then write it to the csv file
+    file = config.get('paths','datafile')#read from the config file for the csv code
 
-        writer = customcsv(file,config.get('fixed','delim'),headers)
+    writer = customcsv(file,config.get('fixed','delim'),headers)
 
-        """ Similar to above...instead of getting the values at the key "name", the values from "function" key
-        are retrieved and then formatted using % tuple(list) method to replace %s indicators in the function. The list
-        comes from the value at key "argv"...only if both fields are in the dictionary (which they should be unless the code is changed
-        map then applies the python function "eval" to each of the function calls in the "calls" array """
-        calls = [(f["function"] % tuple(f["argv"].values())) for f in included if ("function" in f and "argv" in f)]#call
-        results = map(eval,calls)
-        #take the header and the results and join the arrays into a key value pair 
-        data = dict(zip(headers,results))
+    """ Similar to above...instead of getting the values at the key "name", the values from "function" key
+    are retrieved and then formatted using % tuple(list) method to replace %s indicators in the function. The list
+    comes from the value at key "argv"...only if both fields are in the dictionary (which they should be unless the code is changed
+    map then applies the python function "eval" to each of the function calls in the "calls" array """
+    calls = [(f["function"] % tuple(f["argv"].values())) for f in included if ("function" in f and "argv" in f)]#call
+    results = map(eval,calls)
+    #take the header and the results and join the arrays into a key value pair 
+    data = dict(zip(headers,results))
 
-        writer.writedata(data)#write the data to the csv using class method
+    writer.writedata(data)#write the data to the csv using class method
 
     writer.writerclose()#close the file
     return 1#return 1 on success
