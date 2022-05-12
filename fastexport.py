@@ -4,6 +4,7 @@ import mice#for scaner studio functions
 import os #use for path navigation
 
 import ConfigParser
+import json
 
 # import customcsv as csvw
 #path: C:\OKTAL\SCANeRstudio_1.6\bin\x64
@@ -80,7 +81,9 @@ def main():
     config = ConfigParser.ConfigParser()
     config.read("M:/SCANeRstudio_1.6/data/GUELPH_DATA_1.6/script/python/settings.cfg")
 
-    headers = ["Timestamp","Position X","Position Y"]
+    #*Headers are the function names that are in the include.json
+    included = (json.load(open(config.get('paths','included')))).values()
+    headers = [h["name"] for h in included if "name" in h]
 
     folder = config.get('fixed','folder')
     name = config.get('general','name')
@@ -93,14 +96,15 @@ def main():
     file = folder + name + "-" + code + suffix
 
     writer = customcsv(file,config.get('fixed','delim'),headers)
-    timestamp = mice.getScenarioClock()
-    posx = mice.vehicles.values()[0].pos[0]
 
-    posy = eval("mice.vehicles.values()[0].pos[1]")
+    calls = [(f["function"] % tuple(f["argv"])) for f in included if ("function" in f and "argv" in f)]#unformatted call
+    results = map(eval,calls)
+
+    data = dict(zip(headers,results))
 
     #TODO: Set up json reader to get the data from the include.json and get headers and functions and parameters
     
-    writer.writedata({"Timestamp":timestamp,"Position X":posx,"Position Y":posy})
+    writer.writedata(data)
 
     writer.writerclose()
     return 1#return 1 on success

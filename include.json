@@ -1,0 +1,27 @@
+{
+    "getScenarioClock":{
+        "name":"Time",
+        "function":"mice.getScenarioClock()",
+        "class":"Tools",
+        "argc":0,
+        "argv":[]
+    },
+    "getPositionVectorX":{
+        "name":"Position X",
+        "function":"mice.getPositionVector(%s,0)",
+        "class":"Position",
+        "argc":1,
+        "argv":[
+            0
+        ]
+    },
+    "getPositionVectorY":{
+        "name":"Position Y",
+        "function":"mice.getPositionVector(%s,1)",
+        "class":"Position",
+        "argc":1,
+        "argv":[
+            0
+        ]
+    }
+}

@@ -87,7 +87,8 @@ def settimecode():#time code is used for saving the files with different names a
         mice.variables["second"] = float(second)
 
         return code
-        
+        #TODO: Write file name to config file as "most recent" and get rid of vairables in scaner script
+
 def main():
     print("python version: ",sys.version_info)
     print("python path: ",sys.executable)
@@ -96,18 +97,19 @@ def main():
     config = ConfigParser.ConfigParser()
     config.read("M:/SCANeRstudio_1.6/data/GUELPH_DATA_1.6/script/python/settings.cfg")
 
-    vals = [0,1]
-    command = "mice.getPositionVector(%s,%s)"
+    # vals = []
+    # command = "mice.getPositionVector()"
 
-    exex = command % tuple(vals)
-    print(exex)
-    posy = eval(exex)
+    # exex = command % tuple(vals)
+    # print(exex)
+    # posy = eval(exex)
+    # print(posy)
     
     #TODO: Create JSON Reader to read data from the include.json file and then get the headers
 
-    print(posy)
-
-    headers = ["Timestamp","Position X","Position Y"]
+    #*Headers are the function names that are in the include.json
+    included = (json.load(open(config.get('paths','included')))).values()
+    headers = [h["name"] for h in included if "name" in h]
 
     folder = config.get('fixed','folder')
     name = config.get('general','name')
