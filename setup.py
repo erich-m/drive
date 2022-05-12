@@ -77,14 +77,6 @@ def settimecode():#time code is used for saving the files with different names a
         minute = current.minute
         second = current.second
         code = str(year) + str(month).zfill(2) + str(day).zfill(2) + str(hour).zfill(2) + str(minute).zfill(2) +str(second).zfill(2)
-        
-        #save into the correct variables scaner variables have to be less than ~32000
-        mice.variables["year"] = float(year)
-        mice.variables["month"] = float(month)
-        mice.variables["day"] = float(day)
-        mice.variables["hour"] = float(hour)
-        mice.variables["minute"] = float(minute)
-        mice.variables["second"] = float(second)
 
         return code
         #TODO: Write file name to config file as "most recent" and get rid of vairables in scaner script
