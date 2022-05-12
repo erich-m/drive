@@ -77,14 +77,6 @@ def settimecode():#time code is used for saving the files with different names a
         minute = current.minute
         second = current.second
         code = str(year) + str(month).zfill(2) + str(day).zfill(2) + str(hour).zfill(2) + str(minute).zfill(2) +str(second).zfill(2)
-        
-        #save into the correct variables scaner variables have to be less than ~32000
-        mice.variables["year"] = float(year)
-        mice.variables["month"] = float(month)
-        mice.variables["day"] = float(day)
-        mice.variables["hour"] = float(hour)
-        mice.variables["minute"] = float(minute)
-        mice.variables["second"] = float(second)
 
         return code
         #TODO: Write file name to config file as "most recent" and get rid of vairables in scaner script
@@ -114,6 +106,7 @@ def main():
     folder = config.get('fixed','folder')
     name = config.get('general','name')
     code = settimecode()
+    config['paths']['code'] = config.get('paths','recent') + code
     
     suffix = config.get('fixed','suffix')
     file = folder + name + "-" + code + suffix
@@ -123,4 +116,9 @@ def main():
     writer.writeheaders()#write the headers
 
     writer.writerclose()#close the file
+
+    #write the code to the config file under the paths>code
+    with  open(config.get('paths','configuration'),'w') as file:
+        config.write(file)
+
     return 1#return 1 on success
