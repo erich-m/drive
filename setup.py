@@ -88,14 +88,6 @@ def main():
 
     config = ConfigParser.ConfigParser()
     config.read("M:/SCANeRstudio_1.6/data/GUELPH_DATA_1.6/script/python/settings.cfg")
-
-    # vals = []
-    # command = "mice.getPositionVector()"
-
-    # exex = command % tuple(vals)
-    # print(exex)
-    # posy = eval(exex)
-    # print(posy)
     
     #TODO: Create JSON Reader to read data from the include.json file and then get the headers
 
@@ -103,22 +95,19 @@ def main():
     included = (json.load(open(config.get('paths','included')))).values()
     headers = [h["name"] for h in included if "name" in h]
 
-    folder = config.get('fixed','folder')
-    name = config.get('general','name')
-    code = settimecode()
-    config['paths']['code'] = config.get('paths','recent') + code
+    folder = config.get('fixed','folder')#get folder name from config
+    name = config.get('general','name')#get file name from config
+    code = settimecode()#get timestamp for file name
     
-    suffix = config.get('fixed','suffix')
+    suffix = config.get('fixed','suffix')#get file type from config
     file = folder + name + "-" + code + suffix
     
+    filepath = config.get('paths','recent') + file
+    print(filepath)
+
     writer = customcsv(file,config.get('fixed','delim'),headers)#create the new csv file
-
     writer.writeheaders()#write the headers
-
     writer.writerclose()#close the file
 
-    #write the code to the config file under the paths>code
-    with  open(config.get('paths','configuration'),'w') as file:
-        config.write(file)
 
     return 1#return 1 on success
