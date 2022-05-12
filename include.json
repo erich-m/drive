@@ -23,5 +23,31 @@
         "argv":[
             0
         ]
+    },
+    "getAccelerationX":{
+        "name":"Acceleration X",
+        "function":"mice.getAccelerationVector(%s,0)",
+        "class":"Position",
+        "argc":1,
+        "argv":[
+            0
+        ]
+    },
+    "getAccelerationY":{
+        "name":"Acceleration Y",
+        "function":"mice.getAccelerationVector(%s,1)",
+        "class":"Position",
+        "argc":1,
+        "argv":[
+            0
+        ]
+    },"getSpeed":{
+        "name":"Speed",
+        "function":"mice.getSpeed(%s)",
+        "class":"Position",
+        "argc":1,
+        "argv":[
+            0
+        ]
     }
 }

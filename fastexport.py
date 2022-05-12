@@ -97,7 +97,7 @@ def main():
 
     writer = customcsv(file,config.get('fixed','delim'),headers)
 
-    calls = [(f["function"] % tuple(f["argv"])) for f in included if ("function" in f and "argv" in f)]#unformatted call
+    calls = [(f["function"] % tuple(f["argv"])) for f in included if ("function" in f and "argv" in f)]#call
     results = map(eval,calls)
 
     data = dict(zip(headers,results))
