@@ -63,37 +63,15 @@ class customcsv:#custom csv writer to write to csv without extra newline charact
 
             self.file.write(string)
 
-def gettimecode():#retrieves the values fromt he variables to get the right code for the file
-    #fail if any of the date variables are not set
-    if int(mice.variables["year"]) == -1 or int(mice.variables["month"]) == -1 or int(mice.variables["day"]) == -1 or int(mice.variables["hour"]) == -1 or int(mice.variables["minute"]) == -1 or int(mice.variables["second"]) == -1:
-        return -1
-    year = str(int(mice.variables["year"]))
-    month = str(int(mice.variables["month"])).zfill(2)
-    day = str(int(mice.variables["day"])).zfill(2)
-    hour = str(int(mice.variables["hour"])).zfill(2)
-    minute = str(int(mice.variables["minute"])).zfill(2)
-    second = str(int(mice.variables["second"])).zfill(2)
-
-    code = year + month + day + hour + minute + second
-    return code
-
 def main():
     config = ConfigParser.ConfigParser()
     config.read("M:/SCANeRstudio_1.6/data/GUELPH_DATA_1.6/script/python/settings.cfg")
-
+    
     #*Headers are the function names that are in the include.json
     included = (json.load(open(config.get('paths','included')))).values()
     headers = [h["name"] for h in included if "name" in h]
 
-    folder = config.get('fixed','folder')
-    name = config.get('general','name')
-    code = gettimecode()
-
-    if code == -1:
-        return code
-
-    suffix = config.get('fixed','suffix')
-    file = folder + name + "-" + code + suffix
+    file = config.get('paths','code')#read from the config file for the csv code
 
     writer = customcsv(file,config.get('fixed','delim'),headers)
 

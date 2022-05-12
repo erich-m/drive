@@ -114,6 +114,7 @@ def main():
     folder = config.get('fixed','folder')
     name = config.get('general','name')
     code = settimecode()
+    config['paths']['code'] = config.get('paths','recent') + code
     
     suffix = config.get('fixed','suffix')
     file = folder + name + "-" + code + suffix
@@ -123,4 +124,9 @@ def main():
     writer.writeheaders()#write the headers
 
     writer.writerclose()#close the file
+
+    #write the code to the config file under the paths>code
+    with  open(config.get('paths','configuration'),'w') as file:
+        config.write(file)
+
     return 1#return 1 on success
