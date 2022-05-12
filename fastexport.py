@@ -120,3 +120,9 @@ def main():
 
     writer.writerclose()#close the file
     return 1#return 1 on success
+
+    #*Complete By Wednesday
+    #TODO: Create GUI to edit the JSON file of includes...pull the function defs from the defaults.json
+    #TODO: Do testing of the entire list of functions so far
+    #TODO: Add to Barbs study for pilot test
+    #TODO: Add the rest of the applicable "Get" methods to the defaults.json file such as getClosestVehicleToPoint
