@@ -1,4 +1,4 @@
 ## DRIVE LAB FASTEXPORT Project Version 0
 
-TODO: try creating infinite loop in scanner to run the script...
-    isScenarioBeginning hasBeenTrue loops the script faster than 12 Hz
+TODO:
+    Create summary file to count the number of data point and any other valuable information one might need for the resources

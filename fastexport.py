@@ -3,17 +3,16 @@
 import mice#for scaner studio functions
 import os #use for path navigation
 
-from datetime import datetime as dt
+from datetime import datetime as dt#import datetime for the timestamps on the csv file names
 
-import sys
+import sys#import sys for the system information
 
-import ConfigParser
+import ConfigParser#import configparser to be able to read/write tot he configuration file (the file contains paths, settings etc)
 
-import json
+import json#import json to be able to read from the list of functions for the data to collect
 from collections import OrderedDict#for reading from the json maintaining order of the dictionary
 
 #path: C:\OKTAL\SCANeRstudio_1.6\bin\x64
-
 
 class customcsv:#custom csv writer to write to csv without extra newline characters
     def __init__(self,filename,delim,headers):#constructor to get the file name, headers, and deliminator for the file
@@ -32,18 +31,19 @@ class customcsv:#custom csv writer to write to csv without extra newline charact
             os.chdir('M:\\SCANeRstudio_1.6\\data\\GUELPH_DATA_1.6\\script\\python')#this is the path that the python directory should be working from
 
     def __writercreate(self):
-        try:#attempt to open the designated file and then set the open state to True for the instance
-            self.__initpath()
-            self.file = open(self.filename,self.mode)
+        if not self.state:#if the writer is not currently activated yet
+            try:#attempt to open the designated file and then set the open state to True for the instance
+                self.__initpath()#initialize the path if needed to operate in the correct directory
+                self.file = open(self.filename,self.mode)
 
-            self.state = True
-            return 1
-        except Exception as e:#if there are file errors, they will be caught here
-            self.state = False
-            return 0
+                self.state = True#set the state to true
+                return 1
+            except Exception:#if there are file errors, they will be caught here
+                self.state = False
+                return -1
 
     def writerclose(self):#close the file
-        if self.state:
+        if self.state:#if the file is open, close it and set the open state to false
             self.file.close()
             self.state = False
 
@@ -51,36 +51,22 @@ class customcsv:#custom csv writer to write to csv without extra newline charact
         if self.state:
             string = ""
             for h in self.headers:#loop through the array of headers and print them out to the file with the deliminator
-                string += h
-                string += self.delim
+                string += h + self.delim
             string += "\n"
 
             self.file.write(string)
 
     def writedata(self,data):#write the data to the csv file
-        if self.state:
+        if self.state:#if the writer is active, create a string, and loop through the list of defined headers
             string = ""
             for h in self.headers:
-                current = str(data.get(h))
-                if current != None:
+                current = str(data.get(h))#for each header, get the corresponding value associated with it as a string
+                if current != None:#if the value is not empty, write the value
                     string += current
-                string += self.delim
-            string += "\n"
+                string += self.delim#always write a deliminator to separate columns
+            string += "\n"#write a single newline
 
-            self.file.write(string)
-
-def settimecode():#time code is used for saving the files with different names and not overwriting already existing data
-    #get the time data for the file code
-        current = dt.now()
-        year = current.year
-        month = current.month
-        day = current.day
-        hour = current.strftime("%H")#get 24 hour value
-        minute = current.minute
-        second = current.second
-        code = str(year) + str(month).zfill(2) + str(day).zfill(2) + str(hour).zfill(2) + str(minute).zfill(2) +str(second).zfill(2)
-
-        return code
+            self.file.write(string)#write to the file
 
 def main():
     #create configparser to read the settings and standards from the configuration file
@@ -105,7 +91,7 @@ def main():
         #set up the file name from the configuration settings file
         folder = config.get('fixed','folder')#get folder name from config
         name = config.get('general','name')#get file name from config
-        code = settimecode()#get timestamp for file name
+        code = dt.now().strftime("%Y%j%H%M%S")#get timestamp for the csv file formatted as: year, day of year, time
         suffix = config.get('fixed','suffix')#get file type from config
         prepfile = folder + name + "-" + code + suffix#get the csv file that is set up
 
