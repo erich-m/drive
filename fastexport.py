@@ -63,6 +63,7 @@ class customcsv:#custom csv writer to write to csv without extra newline charact
             self.file.write(string)
 
 def main():
+    #create configparser to read the settings and standards from the configuration file
     config = ConfigParser.ConfigParser()
     config.read("M:/SCANeRstudio_1.6/data/GUELPH_DATA_1.6/script/python/settings.cfg")
     

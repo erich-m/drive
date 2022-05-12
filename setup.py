@@ -7,8 +7,10 @@ from datetime import datetime as dt
 
 import sys
 
-import ConfigParser
-import json
+import ConfigParser#for reading paths, settings and csv configurations
+
+import json#for reading function definitions
+from collections import OrderedDict#for reading from the json maintaining order of the dictionary
 
 #path: C:\OKTAL\SCANeRstudio_1.6\bin\x64
 
@@ -95,9 +97,11 @@ def main():
         and values (name, function call, class, argument count and arguments to format into string)
         3. convert the dictionary of function key/value pairs into a list of function definitions
         4. iterate through the list of function definitions. for each definition, get the value by 
-        the key "name" and create a list of all the names, only if the key exists (which it should unless it is changed in the future"""
-    included = (json.load(open(config.get('paths','included')))).values()
+        the key "name" and create a list of all the names, only if the key exists (which it should unless it is changed in the future
+        The dictionary then applies OrderedDict to maintain the order than they appear in the json file originally"""
+    included = (json.load((open(config.get('paths','included'))),object_pairs_hook=OrderedDict)).values()
     headers = [h["name"] for h in included if "name" in h]
+    print(included)
 
     folder = config.get('fixed','folder')#get folder name from config
     name = config.get('general','name')#get file name from config
@@ -105,7 +109,6 @@ def main():
     
     suffix = config.get('fixed','suffix')#get file type from config
     file = folder + name + "-" + code + suffix
-    
 
     writer = customcsv(file,config.get('fixed','delim'),headers)#create the new csv file
     writer.writeheaders()#write the headers

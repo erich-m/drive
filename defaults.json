@@ -80,66 +80,52 @@
     },
     "getAccelerationPedal":{
         "name":"Pedal Position",
-        "function":"mice.getAccelerationPedal(%s)",
+        "function":"mice.getAccelerationPedal(0)",
         "class":"Position",
-        "argc":1,
-        "argv":[
-            0
-        ]
+        "argc":0,
+        "argv":[]
     },
     "getAccelerationX":{
         "name":"Acceleration X",
-        "function":"mice.getAccelerationVector(%s,0)",
+        "function":"mice.getAccelerationVector(0,0)",
         "class":"Position",
-        "argc":1,
-        "argv":[
-            0
-        ]
+        "argc":0,
+        "argv":[]
     },
     "getAccelerationY":{
         "name":"Acceleration Y",
-        "function":"mice.getAccelerationVector(%s,1)",
+        "function":"mice.getAccelerationVector(0,1)",
         "class":"Position",
-        "argc":1,
-        "argv":[
-            0
-        ]
+        "argc":0,
+        "argv":[]
     },
     "getAccelerationZ":{
         "name":"Acceleration Z",
-        "function":"mice.getAccelerationVector(%s,2)",
+        "function":"mice.getAccelerationVector(0,2)",
         "class":"",
-        "argc":1,
-        "argv":[
-            0
-        ]
+        "argc":0,
+        "argv":[]
     },
     "getAngularAccelerationHeading":{
         "name":"Acceleration Heading",
-        "function":"mice.getAngularAccelerationVector(%s,0)",
+        "function":"mice.getAngularAccelerationVector(0,0)",
         "class":"Position",
-        "argc":1,
-        "argv":[
-            0
-        ]
+        "argc":0,
+        "argv":[]
     },
     "getAngularAccelerationPitch":{
         "name":"Acceleration Pitch",
-        "function":"mice.getAngularAccelerationVector(%s,1)",
+        "function":"mice.getAngularAccelerationVector(0,1)",
         "class":"Position",
-        "argc":1,
-        "argv":[
-            0
-        ]
+        "argc":0,
+        "argv":[]
     },
     "getAngularAccelerationRoll":{
         "name":"Acceleration Roll",
-        "function":"mice.getAngularAccelerationVector(%s,2)",
+        "function":"mice.getAngularAccelerationVector(0,2)",
         "class":"Position",
-        "argc":1,
-        "argv":[
-            0
-        ]
+        "argc":0,
+        "argv":[]
     },
     "getAngularPositionHeading":{
         "name":"Position Heading",
@@ -215,39 +201,31 @@
     },
     "getBrakePedal":{
         "name":"Brake Force",
-        "function":"mice.getBrakePedal(%s)",
+        "function":"mice.getBrakePedal(0)",
         "class":"Vehicle",
-        "argc":1,
-        "argv":[
-            0
-        ]
+        "argc":0,
+        "argv":[]
     },
     "getClutchPedal":{
         "name":"Clutch Pedal",
-        "function":"mice.getClutchPedal(%s)",
+        "function":"mice.getClutchPedal(0)",
         "class":"Vehicle",
-        "argc":1,
-        "argv":[
-            0
-        ]
+        "argc":0,
+        "argv":[]
     },
     "getCollisionState":{
         "name":"Collision State",
-        "function":"mice.getollisionState(%s)",
+        "function":"mice.getollisionState(0)",
         "class":"Vehicle",
-        "argc":1,
-        "argv":[
-            0
-        ]
+        "argc":0,
+        "argv":[]
     },
     "getConsumption":{
         "name":"Fuel Consumption",
-        "function":"mice.getConsumption(%s)",
+        "function":"mice.getConsumption(0)",
         "class":"Vehicle",
-        "argc":1,
-        "argv":[
-            0
-        ]
+        "argc":0,
+        "argv":[]
     },
     "getDisappearBackRadius":{
         "name":"Disappear Radius (Behind)",
@@ -287,21 +265,17 @@
     },
     "getEngineRPM":{
         "name":"RPMs",
-        "function":"mice.getEngineRPM(%s)",
+        "function":"mice.getEngineRPM(0)",
         "class":"Vehicle",
-        "argc":1,
-        "argv":[
-            0
-        ]
+        "argc":0,
+        "argv":[]
     },
     "getEngineState":{
         "name":"Engine State",
-        "function":"mice.getEngineState(%s)",
+        "function":"mice.getEngineState(0)",
         "class":"Vehicle",
-        "argc":1,
-        "argv":[
-            0
-        ]
+        "argc":0,
+        "argv":[]
     },
     "getFastLane":{
         "name":"Fast Lane",
@@ -314,12 +288,10 @@
     },
     "getFogLights":{
         "name":"Fog Lights State",
-        "function":"mice.getFogLights(%s)",
+        "function":"mice.getFogLights(0)",
         "class":"Vehicle",
-        "argc":1,
-        "argv":[
-            0
-        ]
+        "argc":0,
+        "argv":[]
     },
     "getFrontAppearFactor":{
         "name":"Appear Factor (Front)",
@@ -350,39 +322,31 @@
     },
     "getHeadlights":{
         "name":"Headlights State",
-        "function":"mice.getHeadLights(%s)",
+        "function":"mice.getHeadLights(0)",
         "class":"Vehicle",
-        "argc":1,
-        "argv":[
-            0
-        ]
+        "argc":0,
+        "argv":[]
     },
     "getHorn":{
         "name":"Horn State",
-        "function":"mice.getHorn(%s)",
+        "function":"mice.getHorn(0)",
         "class":"Vehicle",
-        "argc":1,
-        "argv":[
-            0
-        ]
+        "argc":0,
+        "argv":[]
     },
     "getIgnitionKey":{
         "name":"Ignition Key Position",
-        "function":"mice.getIgnitionKey(%s)",
+        "function":"mice.getIgnitionKey(0)",
         "class":"Vehicle",
-        "argc":1,
-        "argv":[
-            0
-        ]
+        "argc":0,
+        "argv":[]
     },
     "getIndicators":{
         "name":"Turn Signal State",
-        "function":"mice.getIndicators(%s)",
+        "function":"mice.getIndicators(0)",
         "class":"Vehicle",
-        "argc":1,
-        "argv":[
-            0
-        ]
+        "argc":0,
+        "argv":[]
     },
     "getLane":{
         "name":"Lane Number",
@@ -431,21 +395,17 @@
     },
     "getOutOfRoadState":{
         "name":"Out of Road State",
-        "function":"mice.getOutOfRoadState(%s)",
+        "function":"mice.getOutOfRoadState(0)",
         "class":"Road",
-        "argc":1,
-        "argv":[
-            0
-        ]
+        "argc":0,
+        "argv":[]
     },
     "getParkingBrake":{
         "name":"Parking Brake Position",
-        "function":"mice.getParkingBreak(%s)",
+        "function":"mice.getParkingBreak(0)",
         "class":"Road",
-        "argc":1,
-        "argv":[
-            0
-        ]
+        "argc":0,
+        "argv":[]
     },
     "getPhysicsCollidedEntityType":{
         "name":"Collision Entity",
@@ -557,30 +517,24 @@
     },
     "getSpeedVectorX":{
         "name":"Speed X",
-        "function":"mice.getSpeedVector(%s,0)",
+        "function":"mice.getSpeedVector(0,0)",
         "class":"Position",
-        "argc":1,
-        "argv":[
-            0
-        ]
+        "argc":0,
+        "argv":[]
     },
     "getSpeedVectorY":{
         "name":"Speed Y",
-        "function":"mice.getSpeedVector(%s,1)",
+        "function":"mice.getSpeedVector(0,1)",
         "class":"Position",
-        "argc":1,
-        "argv":[
-            0
-        ]
+        "argc":0,
+        "argv":[]
     },
     "getSpeedVectorZ":{
         "name":"Speed Z",
-        "function":"mice.getSpeedVector(%s,2)",
+        "function":"mice.getSpeedVector(0,2)",
         "class":"Position",
-        "argc":1,
-        "argv":[
-            0
-        ]
+        "argc":0,
+        "argv":[]
     },
     "getSpeedLimit":{
         "name":"Speed Limit",
@@ -593,12 +547,10 @@
     },
     "getSteeringWheel":{
         "name":"Steering Wheel Angle",
-        "function":"mice.getSteeringWheel(%s)",
+        "function":"mice.getSteeringWheel(0)",
         "class":"Vehicle",
-        "argc":1,
-        "argv":[
-            0
-        ]
+        "argc":0,
+        "argv":[]
     },
     "getTripMeter":{
         "name":"Trip Meter",
@@ -611,12 +563,10 @@
     },
     "getWarnings":{
         "name":"Warning Lights State",
-        "function":"mice.getWarnings(%s)",
+        "function":"mice.getWarnings(0)",
         "class":"Vehicle",
-        "argc":1,
-        "argv":[
-            0
-        ]
+        "argc":0,
+        "argv":[]
     },
     "getExportedChannel":{
         "name":"Channel",
