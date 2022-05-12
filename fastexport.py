@@ -85,7 +85,7 @@ def main():
     are retrieved and then formatted using % tuple(list) method to replace %s indicators in the function. The list
     comes from the value at key "argv"...only if both fields are in the dictionary (which they should be unless the code is changed
     map then applies the python function "eval" to each of the function calls in the "calls" array """
-    calls = [(f["function"] % tuple(f["argv"])) for f in included if ("function" in f and "argv" in f)]#call
+    calls = [(f["function"] % tuple(f["argv"].values())) for f in included if ("function" in f and "argv" in f)]#call
     results = map(eval,calls)
     #take the header and the results and join the arrays into a key value pair 
     data = dict(zip(headers,results))

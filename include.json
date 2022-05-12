@@ -4,14 +4,14 @@
         "function":"mice.getScenarioClock()",
         "class":"Tools",
         "argc":0,
-        "argv":[]
+        "argv":{}
     },"getSpeed":{
         "name":"Speed",
         "function":"mice.getSpeed(%s)",
         "class":"Position",
         "argc":1,
-        "argv":[
-            0
-        ]
+        "argv":{
+            "vehicleid":0
+        }
     }
 }

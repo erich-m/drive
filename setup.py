@@ -80,7 +80,6 @@ def settimecode():#time code is used for saving the files with different names a
         code = str(year) + str(month).zfill(2) + str(day).zfill(2) + str(hour).zfill(2) + str(minute).zfill(2) +str(second).zfill(2)
 
         return code
-        #TODO: Write file name to config file as "most recent" and get rid of vairables in scaner script
 
 def main():
     #debug print python details
@@ -101,7 +100,6 @@ def main():
         The dictionary then applies OrderedDict to maintain the order than they appear in the json file originally"""
     included = (json.load((open(config.get('paths','included'))),object_pairs_hook=OrderedDict)).values()
     headers = [h["name"] for h in included if "name" in h]
-    print(included)
 
     folder = config.get('fixed','folder')#get folder name from config
     name = config.get('general','name')#get file name from config
