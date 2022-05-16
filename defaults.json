@@ -55,13 +55,6 @@
         "argc":0,
         "argv":{}
     },
-    "getSnowOnRoad":{
-        "name":"Snow Accumulation",
-        "function":"mice.getSnowOnRoad()",
-        "class":"Weather Conditions",
-        "argc":0,
-        "argv":{}
-    },
     "getWaterOnRoad":{
         "name":"Water Accumulation",
         "function":"mice.getWaterOnRoad()",
@@ -79,11 +72,13 @@
         }
     },
     "getAccelerationPedal":{
-        "name":"Pedal Position",
-        "function":"mice.getAccelerationPedal(0)",
+        "name":"Acceleration Pedal",
+        "function":"mice.getAcceleratorPedal(%s)",
         "class":"Position",
-        "argc":0,
-        "argv":{}
+        "argc":1,
+        "argv":{
+            "vehicleid":0
+        }
     },
     "getAccelerationX":{
         "name":"Acceleration X",
@@ -174,7 +169,7 @@
     },
     "getAngularVelocityRoll":{
         "name":"Velocity Roll",
-        "function":"mice.getAngularVelocityVector(%0,2)",
+        "function":"mice.getAngularVelocityVector(%s,2)",
         "class":"Position",
         "argc":1,
         "argv":{
@@ -215,7 +210,7 @@
     },
     "getCollisionState":{
         "name":"Collision State",
-        "function":"mice.getollisionState(0)",
+        "function":"mice.getCollisionState(0)",
         "class":"Vehicle",
         "argc":0,
         "argv":{}
@@ -295,7 +290,7 @@
     },
     "getFrontAppearFactor":{
         "name":"Appear Factor (Front)",
-        "function":"mice.getAppearFrontAppearFactor(%s)",
+        "function":"mice.getFrontAppearFactor(%s)",
         "class":"Swarm",
         "argc":1,
         "argv":{
@@ -359,7 +354,7 @@
     },
     "getLaneCirculationWay":{
         "name":"Lane Direction",
-        "function":"mice.getLaneCirculationWay",
+        "function":"mice.getLaneCirculationWay(%s)",
         "class":"Road",
         "argc":1,
         "argv":{
@@ -402,14 +397,14 @@
     },
     "getParkingBrake":{
         "name":"Parking Brake Position",
-        "function":"mice.getParkingBreak(0)",
+        "function":"mice.getParkingBrake(0)",
         "class":"Road",
         "argc":0,
         "argv":{}
     },
-    "getPhysicsCollidedEntityType":{
+    "getPhysicsCollidedType":{
         "name":"Collision Entity",
-        "function":"mice.getPhysicsCollidedEntityType",
+        "function":"mice.getPhysicsCollidedType(%s)",
         "class":"Vehicle",
         "argc":1,
         "argv":{
@@ -470,9 +465,9 @@
             "vehicleid":0
         }
     },
-    "getRobotizedGearBoxMode":{
+    "getRobotizedGearMode":{
         "name":"Vehicle Transmission",
-        "function":"mice.getRobotizedGearBoxMode(%s)",
+        "function":"mice.getRobotizedGearMode(%s)",
         "class":"Vehicle",
         "argc":1,
         "argv":{
@@ -574,7 +569,7 @@
         "class":"Tools",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "channel":0
         }
     },
     "getCartesianDistance":{
@@ -605,6 +600,42 @@
         "argv":{
             "vehicleid1":0,
             "vehicleid2":1
+        }
+    },
+    "getWipers":{
+        "name":"Wiper State",
+        "function":"mice.getWipers(%s)",
+        "class":"Vehicle",
+        "argc":1,
+        "argv":{
+            "vehicleid":0
+        }
+    },
+    "getRearWipers":{
+        "name":"Rear Wiper State",
+        "function":"mice.getRearWiper(%s)",
+        "class":"Vehicle",
+        "argc":1,
+        "argv":{
+            "vehicleid":0
+        }
+    },
+    "getBrakesTemperature":{
+        "name":"Brake Temperature",
+        "function":"mice.getBrakesTemperature(%s)",
+        "class":"Vehicle",
+        "argc":1,
+        "argv":{
+            "vehicleid":0
+        }
+    },
+    "getVehicleClass":{
+        "name":"Vehicle Class",
+        "function":"mice.getVehicleClass(%s)",
+        "class":"Vehicle",
+        "argc":1,
+        "argv":{
+            "vehicleid":0
         }
     }
   }

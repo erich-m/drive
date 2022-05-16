@@ -5,13 +5,5 @@
         "class":"Tools",
         "argc":0,
         "argv":{}
-    },"getSpeed":{
-        "name":"Speed",
-        "function":"mice.getSpeed(%s)",
-        "class":"Position",
-        "argc":1,
-        "argv":{
-            "vehicleid":0
-        }
     }
 }

@@ -88,6 +88,8 @@ def main():
         print("python version: ",sys.version_info)
         print("python path: ",sys.executable)
 
+        print(dir(mice))
+
         #set up the file name from the configuration settings file
         folder = config.get('fixed','folder')#get folder name from config
         name = config.get('general','name')#get file name from config
@@ -122,7 +124,7 @@ def main():
     return 1#return 1 on success
 
     #*Complete By Wednesday
-    #TODO: Create GUI to edit the JSON file of includes...pull the function defs from the defaults.json
     #TODO: Do testing of the entire list of functions so far
+    #TODO: Create GUI to edit the JSON file of includes...pull the function defs from the defaults.json
     #TODO: Add to Barbs study for pilot test
     #TODO: Add the rest of the applicable "Get" methods to the defaults.json file such as getClosestVehicleToPoint
