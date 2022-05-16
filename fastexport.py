@@ -80,7 +80,7 @@ def main():
         4. iterate through the list of function definitions. for each definition, get the value by 
         the key "name" and create a list of all the names, only if the key exists (which it should unless it is changed in the future
         The dictionary then applies OrderedDict to maintain the order than they appear in the json file originally"""
-    included = (json.load((open(config.get('paths','included'))),object_pairs_hook=OrderedDict)).values()
+    included = (json.load((open(config.get('scanerpaths','included'))),object_pairs_hook=OrderedDict)).values()
     headers = [h["name"] for h in included if "name" in h]
 
     if mice.isScenarioBeginning():#run setup on first loop through the script
@@ -100,12 +100,12 @@ def main():
         writer = customcsv(prepfile,config.get('fixed','delim'),headers)#create the new csv file
         writer.writeheaders()#write the headers
 
-        filepath = config.get('paths','recent') + prepfile#get full path for the csv file
-        config.set('paths','datafile',filepath)#set to the datapth field in the cfg file
-        with open(config.get('paths','configuration'),'w') as settings:
+        filepath = config.get('scanerpaths','recent') + prepfile#get full path for the csv file
+        config.set('scanerpaths','datafile',filepath)#set to the datapth field in the cfg file
+        with open(config.get('scanerpaths','configuration'),'w') as settings:
             config.write(settings)#write the new file name to the settings file
     #run export procedures to get the data from the simulation and then write it to the csv file
-    file = config.get('paths','datafile')#read from the config file for the csv code
+    file = config.get('scanerpaths','datafile')#read from the config file for the csv code
 
     writer = customcsv(file,config.get('fixed','delim'),headers)
 
