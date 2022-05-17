@@ -1,6 +1,7 @@
 #python version 3.7.2
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 
 import configparser
 import json
@@ -25,13 +26,13 @@ class Window:
         self.location = Label(self.master,text="File Location:" + config.get('guipaths','data'),font=config.get('guidata','smallfont'))
         self.location.grid(row=3,column=0,columnspan=6)
 
-        self.opendata = Button(self.master,text="Open File Location",font=config.get('guidata','smallfont'),command=self.__openfilelocation)
+        self.opendata = Button(self.master,text="Open File Location",font=config.get('guidata','smallfont'),bg='cyan',command=self.__openfilelocation)
         self.opendata.grid(row=4,column=0,columnspan=6)
 
         self.separator2 = ttk.Separator(self.master,orient="horizontal")
         self.separator2.grid(row=5,column=0,columnspan=6,sticky="ew",pady=5)
 
-        self.filename = Label(self.master, text = "File Name: ",font=config.get('guidata','smallfont'),anchor="e")
+        self.filename = Label(self.master, text = "Save as: ",font=config.get('guidata','smallfont'),anchor="e")
         self.filename.grid(row=6,column=0,columnspan=2,sticky="e")
 
         self.nameentry = Entry(self.master,font=config.get('guidata','smallfont'))
@@ -53,15 +54,75 @@ class Window:
         self.selectlabel = Label(self.master,text="Available Fields:",font=config.get('guidata','bodyfont'))
         self.selectlabel.grid(row=9,column=3,columnspan=3)
 
-        self.selectlist = Listbox(self.master,selectmode=SINGLE)
+        self.rightframe = Frame(self.master)
+        self.selectlist = Listbox(self.rightframe,selectmode=SINGLE,font=config.get('guidata','smallfont'),activestyle='none')
         
+        self.selectlist.pack(side="left",fill=BOTH)
+
+        self.scrollbarright = Scrollbar(self.rightframe)
+        self.scrollbarright.pack(side="right",fill=BOTH)
+
         for f in range(len(fields)):
             self.selectlist.insert(f+1,fields[f])
 
-        self.selectlist.grid(row=10,column=3,columnspan=3,sticky="ew",padx=5)
+        self.selectlist.config(yscrollcommand=self.scrollbarright.set)
+        self.scrollbarright.config(command=self.selectlist.yview)
+
+        self.rightframe.grid(row=10,column=3,columnspan=3,padx=5)
+
+        self.leftframe = Frame(self.master)
+        self.includelist = Listbox(self.leftframe,selectmode=SINGLE,font=config.get('guidata','smallfont'),activestyle='none')
+
+        self.includelist.pack(side="left",fill=BOTH)
+
+        self.scrollbarleft = Scrollbar(self.leftframe)
+        self.scrollbarleft.pack(side="right",fill=BOTH)
+
+        self.includelist.config(yscrollcommand=self.scrollbarleft.set)
+        self.scrollbarleft.config(command=self.includelist.yview)
+
+        self.leftframe.grid(row=10,column=0,columnspan=3,padx=5)
+
+        self.separator4 = ttk.Separator(self.master,orient="horizontal")
+        self.separator4.grid(row=11,column=0,columnspan=6,sticky="ew",pady=5)
+
+        self.separator5 = ttk.Separator(self.master,orient="horizontal")
+        self.separator5.grid(row=13,column=0,columnspan=6,sticky="ew",pady=5)
+
+        self.save = Button(self.master,text="Save Configuration",font=config.get('guidata','bodyfont'),bg='green',command=self.__saveconfig)
+        self.save.grid(row=14,column=0,columnspan=3,pady=5)
+
+        self.save = Button(self.master,text="Cancel Configuration",font=config.get('guidata','bodyfont'),bg='red',command=self.__openmessagebox)
+        self.save.grid(row=14,column=3,columnspan=3,pady=5)
+
+        self.addremove = Frame(self.master)
+        self.add = Button(self.addremove,text="Add Field",font=config.get('guidata','smallfont'),command=self.__addinclude)
+        self.add.pack(side="top",fill=BOTH,pady=5)
+        self.remove = Button(self.addremove,text="Remove Field",font=config.get('guidata','smallfont'))
+        self.remove.pack(side="bottom",fill=BOTH,pady=5)
+        self.addremove.grid(row=12,column=0,columnspan=3)
 
     def __openfilelocation(self):
         subprocess.Popen(config.get('guipaths','opendata'))
+
+    def __openmessagebox(self):
+        self.cancel = messagebox.askquestion('Cancel?','Cancelling will not save any configurations. Do you wish to cancel?')
+        if self.cancel == 'yes':
+            self.master.destroy()
+
+    def __addinclude(self):
+        try:
+            print(self.selectlist.get(self.selectlist.curselection()))
+        except Exception:
+            pass
+
+
+#file names cannot have \/:*?"<>|
+#warn that settings are unverified (for vehicles that dont exist)
+    def __saveconfig(self):
+
+        print("saving configurations")
+        self.master.destroy()
 
 
 def initpath():
