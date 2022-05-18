@@ -3,6 +3,7 @@
       "name":"Cloud Density",
       "function":"mice.getCloudDensity()",
       "class":"Weather Conditions",
+      "description":"Returns the current density of clouds the sky. 0 : no clouds, sunny weather. 1 : stormy weather.",
       "argc":0,
       "argv":{}
     },
@@ -10,6 +11,7 @@
         "name":"Current Task",
         "function":"mice.getCurrentTask()",
         "class":"Tools",
+        "description":"Returns the number of the current task. The first task of a scenario has number 0. Returns NONE = -1 if the scenario is currently in no task",
         "argc":0,
         "argv":{}
     },
@@ -17,6 +19,7 @@
         "name":"Time of Day",
         "function":"mice.getDayTime()",
         "class":"Weather Conditions",
+        "description":"Returns the current hour in the simulated day, from 0 to 24, with a floating point value for minutes and seconds. 0 is midnight, 12 is midday, 14.5 is 14h30.",
         "argc":0,
         "argv":{}
     },
@@ -24,6 +27,7 @@
         "name":"Visibility",
         "function":"mice.getFog()",
         "class":"Weather Conditions",
+        "description":"Returns the current visibility distance caused by fog, in meters. When there is no fog, it returns -1.0.",
         "argc":0,
         "argv":{}
     },
@@ -31,6 +35,7 @@
         "name":"Rain Coefficient",
         "function":"mice.getRain()",
         "class":"Weather Conditions",
+        "description":"Returns the current rain coefficient, from 0 (no rain) to 1 (strong rain).",
         "argc":0,
         "argv":{}
     },
@@ -38,6 +43,7 @@
         "name":"Time",
         "function":"mice.getScenarioClock()",
         "class":"Tools",
+        "description":"Returns the time elapsed from scenario starting, in seconds.",
         "argc":0,
         "argv":{}
     },
@@ -45,6 +51,7 @@
         "name":"Sky Saturation",
         "function":"mice.getSkySaturation()",
         "class":"Weather Conditions",
+        "description":"Returns the current saturation of the sky. 0 is no saturation (white color), 1 is full saturation (full color).",
         "argc":0,
         "argv":{}
     },
@@ -52,6 +59,7 @@
         "name":"Snow Coefficient",
         "function":"mice.getSnow()",
         "class":"Weather Conditions",
+        "description":"Returns the current snow coefficient, from 0 (no snow) to 1 (strong snow).",
         "argc":0,
         "argv":{}
     },
@@ -59,6 +67,7 @@
         "name":"Water Accumulation",
         "function":"mice.getWaterOnRoad()",
         "class":"Weather Conditions",
+        "description":"Returns the current water accumulation on roads, from 0 to 20 millimeters.",
         "argc":0,
         "argv":{}
     },
@@ -66,24 +75,25 @@
         "name":"Acceleration",
         "function":"mice.getAcceleration(%s)",
         "class":"Position",
+        "description":"Returns the current acceleration of the vehicle in m/s^2. The value is negative if the vehicle is decelerating and positive if accelerating.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getAccelerationPedal":{
         "name":"Acceleration Pedal",
-        "function":"mice.getAcceleratorPedal(%s)",
+        "function":"mice.getAcceleratorPedal(0)",
         "class":"Position",
+        "description":"Returns the position of accelerator pedal, between 0 (released) and 1 (pressed). This function only works on interactive vehicles.",
         "argc":1,
-        "argv":{
-            "vehicleid":0
-        }
+        "argv":{}
     },
     "getAccelerationX":{
         "name":"Acceleration X",
         "function":"mice.getAccelerationVector(0,0)",
         "class":"Position",
+        "description":"This function only works on interactive vehicles. 0.0 is returned if the specified vehicle is not interactive.",
         "argc":0,
         "argv":{}
     },
@@ -91,13 +101,15 @@
         "name":"Acceleration Y",
         "function":"mice.getAccelerationVector(0,1)",
         "class":"Position",
+        "description":"This function only works on interactive vehicles. 0.0 is returned if the specified vehicle is not interactive.",
         "argc":0,
         "argv":{}
     },
     "getAccelerationZ":{
         "name":"Acceleration Z",
         "function":"mice.getAccelerationVector(0,2)",
-        "class":"",
+        "class":"Position",
+        "description":"This function only works on interactive vehicles. 0.0 is returned if the specified vehicle is not interactive.",
         "argc":0,
         "argv":{}
     },
@@ -105,6 +117,7 @@
         "name":"Acceleration Heading",
         "function":"mice.getAngularAccelerationVector(0,0)",
         "class":"Position",
+        "description":"Returns the the HEADING of the angular acceleration vector (expressed in the local referential of the vehicle) of the rear axle center of the specified vehicle. Heading angle specifies the vehicle rotation around it's vertical axis.",
         "argc":0,
         "argv":{}
     },
@@ -112,6 +125,7 @@
         "name":"Acceleration Pitch",
         "function":"mice.getAngularAccelerationVector(0,1)",
         "class":"Position",
+        "description":"Returns the the PITCH of the angular acceleration vector (expressed in the local referential of the vehicle) of the rear axle center of the specified vehicle. Pitch angle specifies the vehicle rotation around it's traversal axis.",
         "argc":0,
         "argv":{}
     },
@@ -119,6 +133,7 @@
         "name":"Acceleration Roll",
         "function":"mice.getAngularAccelerationVector(0,2)",
         "class":"Position",
+        "description":"Returns the the ROLL of the angular acceleration vector (expressed in the local referential of the vehicle) of the rear axle center of the specified vehicle. Roll angle specifies the vehicle rotation around it's longitudinal axis.",
         "argc":0,
         "argv":{}
     },
@@ -126,85 +141,87 @@
         "name":"Position Heading",
         "function":"mice.getAngularPositionVector(%s,0)",
         "class":"Position",
+        "description":"Returns the HEADING of the angular position vector of the rear axle center of the specified vehicle. Heading angle specifies the vehicle rotation around it's vertical axis. Heading equals 0 if the vehicle heading is equal to the x-axis of the SCANeR terrain coordinate system.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getAngularPositionPitch":{
         "name":"Position Pitch",
         "function":"mice.getAngularPositionVector(%s,1)",
         "class":"Position",
+        "description":"Returns the PITCH of the angular position vector of the rear axle center of the specified vehicle. Pitch angle specifies the vehicle rotation around it's traversal axis. Pitch angle is positive if the front of the vehicle is lower than the rear. Pitch angle equals 0 if the front of the car is as high as the rear.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getAngularPositionRoll":{
         "name":"Position Roll",
         "function":"mice.getAngularPositionVector(%s,2)",
         "class":"Position",
+        "description":"Returns the ROLL of the angular position vector of the rear axle center of the specified vehicle. Roll angle specifies the vehicle rotation around it's longitudinal axis. Roll is positive if the left side of the vehicle is above the right side. Roll angle equals 0 if the left side of the car is as high as the right side.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getAngularVelocityHeading":{
         "name":"Velocity Heading",
         "function":"mice.getAngularVelocityVector(%s,0)",
         "class":"Position",
+        "description":"Returns the HEADING of the angular velocity vector (expressed in the local referential of the vehicle) of the rear axle center of the specified vehicle. Heading angle specifies the vehicle rotation around it's vertical axis.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getAngularVelocityPitch":{
         "name":"Velocity Pitch",
         "function":"mice.getAngularVelocityVector(%s,1)",
         "class":"Position",
+        "description":"Returns the PITCH of the angular velocity vector (expressed in the local referential of the vehicle) of the rear axle center of the specified vehicle. Pitch angle specifies the vehicle rotation around it's traversal axis. Pitch angle is positive if the front of the vehicle is going down.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getAngularVelocityRoll":{
         "name":"Velocity Roll",
         "function":"mice.getAngularVelocityVector(%s,2)",
         "class":"Position",
+        "description":"Returns the ROLL of the angular velocity vector (expressed in the local referential of the vehicle) of the rear axle center of the specified vehicle. Roll angle specifies the vehicle rotation around it's longitudinal axis. Roll is positive if the left side of the vehicle is going up.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getAppearBackRadius":{
         "name":"Appear Radius (Behind)",
         "function":"mice.getAppearBackRadius(%s)",
         "class":"Swarm",
+        "description":"Returns the appear back radius parameter of a queen specified vehicle. This function should only be used if specified vehicle is a queen of a swarm traffic. Values will also be returned if the specified vehicle is a swarm member but they will not have any meaning.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getAppearFrontRadius":{
         "name":"Appear Radius (Front)",
         "function":"mice.getAppearFrontRadius(%s)",
         "class":"Swarm",
+        "description":"Returns the appear front radius parameter of a queen specified vehicle. This function should only be used if specified vehicle is a queen of a swarm traffic. Values will also be returned if the specified vehicle is a swarm member but they will not have any meaning.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getBrakePedal":{
         "name":"Brake Force",
         "function":"mice.getBrakePedal(0)",
         "class":"Vehicle",
-        "argc":0,
-        "argv":{}
-    },
-    "getClutchPedal":{
-        "name":"Clutch Pedal",
-        "function":"mice.getClutchPedal(0)",
-        "class":"Vehicle",
+        "description":"Returns the force applied on the brake pedal : 0 if released.",
         "argc":0,
         "argv":{}
     },
@@ -212,6 +229,7 @@
         "name":"Collision State",
         "function":"mice.getCollisionState(0)",
         "class":"Vehicle",
+        "description":"Returns the state of the specified interactive vehicle concerning the \"ollision\" functionality which is activated with the setCollisionActivation action. Needs TRAFFIC process running. -1 for: \"collision functionality not activated\" or \"vehicle not interactive\". 0 for NORMAL. 1 for FROZEN. 2 for DISPLACED",
         "argc":0,
         "argv":{}
     },
@@ -219,6 +237,7 @@
         "name":"Fuel Consumption",
         "function":"mice.getConsumption(0)",
         "class":"Vehicle",
+        "description":"Returns the consumption of the vehicle in milliliters per second. This function only works on interactive vehicles.",
         "argc":0,
         "argv":{}
     },
@@ -226,42 +245,47 @@
         "name":"Disappear Radius (Behind)",
         "function":"mice.getDisappearBackRadius(%s)",
         "class":"Swarm",
+        "description":"Returns the disappear back radius parameter of a queen specified vehicle. This function should only be used if specified vehicle is a queen of a swarm traffic. Values will also be returned if the specified vehicle is a swarm member but they will not have any meaning.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getDisappearFrontRadius":{
         "name":"Disappear Radius (Front)",
         "function":"mice.getDisappearFrontRadius(%s)",
         "class":"Swarm",
+        "description":"Returns the disappear front radius parameter of a queen specified vehicle. This function should only be used if specified vehicle is the queen of a swarm traffic. Values will also be returned if the specified vehicle is a swarm member but they will not have any meaning.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getDistanceToNextIntersection":{
         "name":"Distance to Next Intersection",
         "function":"mice.getDistanceToNextIntersection(%s)",
         "class":"Position",
+        "description":"Returns the distance between the specified vehicle reference point and the end of its current road, in meters. If the specified vehicle is currently driving on an intersection, a small value ( from 0 to 0.1 meters) is returned.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getDistanceToNextVehicle":{
         "name":"Distance To Next Vehicle",
         "function":"mice.getDistanceToNextVehicle(%s)",
         "class":"Position",
+        "description":"Returns the distance in meters to the next vehicle in front of the specified vehicle, and on its path. A vehicle is on the path of the specified vehicle if it is ahead of the specified vehicle and it either drives: on the same lane of the specified vehicle, OR on the lane on the left of specified vehicle lane and the vehicle is filtering in (based on his indicator state), OR on the lane on the right of specified vehicle lane and the vehicle is pulling out (based on his indicator state). Next vehicle is the closest to the specified vehicle among all the vehicles on the path of the specified vehicle (See figure below). The distance returned is measured along the road from the front of the specified vehicle to the rear of the next vehicle.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getEngineRPM":{
         "name":"RPMs",
         "function":"mice.getEngineRPM(0)",
         "class":"Vehicle",
+        "description":"Returns the vehicle RPM, in rotations per minute. This function only works on interactive vehicles.",
         "argc":0,
         "argv":{}
     },
@@ -269,6 +293,7 @@
         "name":"Engine State",
         "function":"mice.getEngineState(0)",
         "class":"Vehicle",
+        "description":"Returns the status of the vehicle engine. 0 for OFF, 1 for ON. This function only works on interactive vehicles.",
         "argc":0,
         "argv":{}
     },
@@ -276,15 +301,17 @@
         "name":"Fast Lane",
         "function":"mice.getFastLane(%s)",
         "class":"Road",
+        "description":"An integer value, the number of the last overtaking lane, the one closest to the central axis.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getFogLights":{
         "name":"Fog Lights State",
         "function":"mice.getFogLights(0)",
         "class":"Vehicle",
+        "description":"Returns the position of the fog lights command. 0 for OFF, 1 for ON. This function only works on interactive vehicles",
         "argc":0,
         "argv":{}
     },
@@ -292,33 +319,33 @@
         "name":"Appear Factor (Front)",
         "function":"mice.getFrontAppearFactor(%s)",
         "class":"Swarm",
+        "description":"Returns the front appear factor parameter of a queen specified vehicle. When a swarm member vehicle is inserted in a specific swarm, this insertion is done at random ahead or behind the swarm queen vehicle. (See swarm traffic). The front appear factor indicates the probability for the specified vehicle to be inserted in its swarm ahead the queen vehicle. This function should only be used if specified vehicle is a queen of a swarm traffic.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getGearbox":{
         "name":"Gear Lever Position",
-        "function":"mice.getGearbox(%s)",
+        "function":"mice.getGearbox(0)",
         "class":"Vehicle",
+        "description":"Returns the physical position of the gearbox lever. This function only works on interactive vehicles. 0 (if the vehicle is not interactive). For car: -7 for SEQUENTIAL_DOWN(robotized sequential gearbox), -6 for SEQUENTIAL_NEUTRAL(robotized sequential gearbox), -5 for SEQUENTIAL_UP(robotized sequential gearbox), -4 for PARK(automatic or robotized gearbox), -3 for DRIVE(automatic or robotized automatic gearbox), -1 forREVERSE(automatic, robotized or manual gearbox), 0 for NEUTRAL(automatic, robotized or manual gearbox), 1, ..,5(automatic, robotized or manual gearbox)",
         "argc":1,
-        "argv":{
-            "vehicleid":0
-        }
+        "argv":{}
     },
     "getGearEngaged":{
         "name":"Engine Gear",
-        "function":"mice.getGearEngaged(%s)",
+        "function":"mice.getGearEngaged(0)",
         "class":"Vehicle",
+        "description":"Returns the real gear engaged in the motor. -1 (if the vehicle is not interactive). For car: -1 to 5",
         "argc":1,
-        "argv":{
-            "vehicleid":0
-        }
+        "argv":{}
     },
     "getHeadlights":{
         "name":"Headlights State",
         "function":"mice.getHeadLights(0)",
         "class":"Vehicle",
+        "description":"Returns the position of the lights command. 0 for OFF, 1 for POSITION, 2 for DIPPED, 3 for FULLThis function only works on interactive vehicles.",
         "argc":0,
         "argv":{}
     },
@@ -326,6 +353,7 @@
         "name":"Horn State",
         "function":"mice.getHorn(0)",
         "class":"Vehicle",
+        "description":"Returns the position of the horn. 0 for OFF, 1 for ON. This function only works on interactive vehicles.",
         "argc":0,
         "argv":{}
     },
@@ -333,6 +361,7 @@
         "name":"Ignition Key Position",
         "function":"mice.getIgnitionKey(0)",
         "class":"Vehicle",
+        "description":"Returns the position of the ignition key. 0 for OFF, 1 for RADIO, 2 for ON, 3 for START. This function only works on interactive vehicles.",
         "argc":0,
         "argv":{}
     },
@@ -340,6 +369,7 @@
         "name":"Turn Signal State",
         "function":"mice.getIndicators(0)",
         "class":"Vehicle",
+        "description":"Returns the position of the indicators command. 0 for NONE. 1 for LEFT (left indicator blinking). 2 for RIGHT (right indicator blinking)This function only works on interactive vehicles. For autonomous vehicles, value 0 is always returned.",
         "argc":0,
         "argv":{}
     },
@@ -347,51 +377,57 @@
         "name":"Lane Number",
         "function":"mice.getLane(%s)",
         "class":"Road",
+        "description":"Returns the number associated to the lane on which the vehicle is driving. The value of the lane number increases according to the principles shown in the following figures: Lanes are sorted from right to left according to the direction of the specified vehicle. Right lane is lane #1, left lane is lane # Number_of_lanes (of the road).",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getLaneCirculationWay":{
         "name":"Lane Direction",
         "function":"mice.getLaneCirculationWay(%s)",
         "class":"Road",
+        "description":"This function can be used to get the 'direction lane' on which the vehicle is running. -3, Vehicle not found. -2, There is no lane for the current vehicle position. -1, No way or unknown way. 0, Direct way. 1, Inverse way. 2, Both direct and inverse way.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getLaneTypeVehicle":{
         "name":"Lane Type (Vehicle)",
         "function":"mice.getLaneTypeVehicle(%s)",
         "class":"Road",
+        "description":"This function can be used to get the 'lane type' on which the vehicle is running. The current lane of a vehicle is the lane on the middle of the vehicle rear axle. -3, Vehicle not found. -2, There is no lane for the current vehicle position. -1, No way or unknown way. 0, paved. 14, land.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getNextIntersectionDirection":{
         "name":"Next Intersection Direction",
         "function":"mice.getNextIntersectionDirection(%s)",
         "class":"Road",
+        "description":"Returns the direction of the specified vehicle at the next intersection using an indicator-like way: 0 if the direction is straight ahead, (angle from 135° and 225°). 1 if the direction is on the left, (angle from 225° and 360°). 2 if the direction is on the right (angle from 0° and 135°). This function only works for autonomous vehicle. For an interactive vehicle, -1 is returned.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":1
         }
     },
     "getNextVehicleInPath":{
         "name":"Next Vehicle In Path",
         "function":"mice.getNextVehicleInPath(%s)",
         "class":"Road",
+        "description":"Returns the identifier of the first vehicle preceeding the specified vehicle in its path. A vehicle is on the path of the specified vehicle if it is preceeding the specified vehicle and if its current or future lane is the lane of the specified vehicle, ie this vehicle either drives: on the same lane of the specified vehicle, OR on the lane on the left of specified vehicle lane and the vehicle is filtering in ( right indicator must be activated ), OR on the lane on the right of specified vehicle lane and the vehicle is pulling out ( left indicator must be activated ). The vehicle returned is the closest to the specified vehicle among all the vehicles on the path of the specified vehicle",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getOutOfRoadState":{
         "name":"Out of Road State",
         "function":"mice.getOutOfRoadState(0)",
         "class":"Road",
+        "description":"Returns the state of the specified interactive vehicle concerning the \"out of road\" functionality which is activated with the setOutOfRoadActivation action. -1 for: “out of road functionality not activated” or “vehicle not interactive“. 0 for NORMAL. 1 for FREEZED. 2 for DISPLACED",
         "argc":0,
         "argv":{}
     },
@@ -399,121 +435,125 @@
         "name":"Parking Brake Position",
         "function":"mice.getParkingBrake(0)",
         "class":"Road",
+        "description":"Returns the position of the parking brake, from 0 (released) to 1 (maximum braking). This function only works on interactive vehicles.",
         "argc":0,
         "argv":{}
-    },
-    "getPhysicsCollidedType":{
-        "name":"Collision Entity",
-        "function":"mice.getPhysicsCollidedType(%s)",
-        "class":"Vehicle",
-        "argc":1,
-        "argv":{
-            "vehicleid":0
-        }
     },
     "getPollution":{
         "name":"Pollution",
         "function":"mice.getPollution(%s)",
         "class":"Vehicle",
+        "description":"Returns the quantity CO2 produced by the specified vehicle. (Grams of CO2 per seconds)",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getPositionVectorX":{
         "name":"Position X",
         "function":"mice.getPositionVector(%s,0)",
         "class":"Position",
+        "description":"Returns x of specified vehicle rear axle center position vector in the terrain database referential. This function works on interactive and autonomous vehicles.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getPositionVectorY":{
         "name":"Position Y",
         "function":"mice.getPositionVector(%s,1)",
         "class":"Position",
+        "description":"Returns y of specified vehicle rear axle center position vector in the terrain database referential. This function works on interactive and autonomous vehicles.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getPositionVectorZ":{
         "name":"Position Z",
         "function":"mice.getPositionVector(%s,2)",
         "class":"Position",
+        "description":"Returns z of specified vehicle rear axle center position vector in the terrain database referential. This function works on interactive and autonomous vehicles.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getQueenIdentifier":{
         "name":"Queen Identifier",
         "function":"mice.getQueenIdentifier(%s)",
         "class":"Swarm",
+        "description":"Returns the queen vehicle identifier of the swarm traffic to whom the specified swarm member vehicle belongs. This function should only be used if the specified vehicle is a swarm member. If the specified vehicle is not a swarm member (then it is a queen), -1.0 is returned.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getRoadIdentifier":{
         "name":"Road Identifier",
         "function":"mice.getRoadIdentifier(%s)",
         "class":"Road",
+        "description":"Return the value corresponding to the road on which the specified vehicle is driving.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getRobotizedGearMode":{
         "name":"Vehicle Transmission",
         "function":"mice.getRobotizedGearMode(%s)",
         "class":"Vehicle",
+        "description":"Returns the mode (-1 for DEFAULT : not a robotized gear box or not an interactive vehicle. 0 for AUTOMATIC robotized gearbox. 2 for SEQUENTIAL robotized gearbox.) the dynamic model has chosen in case of a robotized gearbox. This function only works on interactive vehicles.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getSafetyDistance":{
         "name":"Safety Distance",
         "function":"mice.getSafetyDistance(%s)",
         "class":"Vehicle",
+        "description":"Returns the safety distance of the specified vehicle. The safety distance is a distance in front of the vehicle where no other vehicle must be present.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getSafetyTime":{
         "name":"Safety Time",
         "function":"mice.getSafetyTime(%s)",
         "class":"Vehicle",
+        "description":"Return the value of the safety time parameter of the specified vehicle. The safety time is the time the specified vehicle tries to keep from the vehicle that proceeds it in its lane.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getSlowLane":{
         "name":"Slow Lane",
         "function":"mice.getSlowLane(%s)",
         "class":"Road",
+        "description":"An integer value, the number of the lane the vehicle dives on when not overtaking, the one furthest from the central axis (excluding the shoulder and entrance/exit lanes).",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getSpeed":{
         "name":"Speed",
         "function":"mice.getSpeed(%s)",
         "class":"Position",
+        "description":"Returns the speed of the vehicle in kilometers per hour. The value is negative if the vehicle is driving in reverse.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getSpeedVectorX":{
         "name":"Speed X",
         "function":"mice.getSpeedVector(0,0)",
         "class":"Position",
+        "description":"A float value in meters per seconds for x direction. This function only works on interactive vehicles. 0.0 is returned if the specified vehicle is not interactive.",
         "argc":0,
         "argv":{}
     },
@@ -521,6 +561,7 @@
         "name":"Speed Y",
         "function":"mice.getSpeedVector(0,1)",
         "class":"Position",
+        "description":"A float value in meters per seconds for y direction. This function only works on interactive vehicles. 0.0 is returned if the specified vehicle is not interactive.",
         "argc":0,
         "argv":{}
     },
@@ -528,6 +569,7 @@
         "name":"Speed Z",
         "function":"mice.getSpeedVector(0,2)",
         "class":"Position",
+        "description":"A float value in meters per seconds for z direction. This function only works on interactive vehicles. 0.0 is returned if the specified vehicle is not interactive.",
         "argc":0,
         "argv":{}
     },
@@ -535,15 +577,17 @@
         "name":"Speed Limit",
         "function":"mice.getSpeedLimit(%s)",
         "class":"Road",
+        "description":"Returns the legal speed limit of the lane on which the specified vehicle is driving. A speed limit is defined for each lane of each portion of each track.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getSteeringWheel":{
         "name":"Steering Wheel Angle",
         "function":"mice.getSteeringWheel(0)",
         "class":"Vehicle",
+        "description":"Returns the vehicle steering wheel position, between [min_radian, max_radian], positive radians to the left. The position is 0 when the steering wheel is centered. The position is positive (or negative) when the steering wheel, or your acquisition, is turned to left (or to right). This function only works on interactive vehicles.",
         "argc":0,
         "argv":{}
     },
@@ -551,15 +595,17 @@
         "name":"Trip Meter",
         "function":"mice.getTripMeter(%s)",
         "class":"Position",
+        "description":"Returns, in meters, the distance covered by the vehicle since the beginning of the scenario. If the vehicle is moved by SCANeR GUI or setPosition, then the tripmeter is not reset to 0 but the new result integrates the translation distance.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getWarnings":{
         "name":"Warning Lights State",
         "function":"mice.getWarnings(0)",
         "class":"Vehicle",
+        "description":"Returns the position of the warnings. 0 for OFF, 1 for ON. This function only works on interactive vehicles.",
         "argc":0,
         "argv":{}
     },
@@ -567,75 +613,73 @@
         "name":"Channel",
         "function":"mice.getExportedChannel(%s)",
         "class":"Tools",
+        "description":"Returns the parameter value contained in specified export channel. Default output from unused channel is 0",
         "argc":1,
         "argv":{
-            "channel":0
+            "Channel ID":0
         }
     },
     "getCartesianDistance":{
         "name":"Cartesian Distance",
         "function":"mice.getCartesianDistance(%s,%s)",
         "class":"Vehicle",
+        "description":"Returns the cartesian distance between the rear axle centers of both specified vehicles, whatever the directions of the specified vehicles on the road are. The cartesian distance between two points is the distance measured along the straight line joining those two points. If distance cannot be found, value 99000 is returned",
         "argc":2,
         "argv":{
-            "vehicleid1":0,
-            "vehicleid2":1
+            "Vehicle ID (1)":0,
+            "Vehicle ID (2)":1
         }
     },
     "getCurvilignDistance":{
         "name":"Curvilign Distance",
         "function":"mice.getCurvilignDistance(%s,%s)",
         "class":"Vehicle",
+        "description":"Returns the curvilinear distance between the rear axle centers of both specified vehicles, whatever the direction of the specified vehicles on the track. Value is greater than 0 when vehicle1 is behind vehicle2. The distance is found if both vehicles are driving on the same track and the same portion. If distance cannot be found, value 99000 is returned",
         "argc":2,
         "argv":{
-            "vehicleid1":0,
-            "vehicleid2":1
+            "Vehicle ID (1)":0,
+            "Vehicle ID (2)":1
         }
     },
     "getGraphDistance":{
         "name":"Warning Lights State",
         "function":"mice.getGraphDistance(%s,%s)",
         "class":"Vehicle",
+        "description":"Returns the curvilinear distance between the rear axle centers of both specified vehicles. The value of distance is only found if there is none or at most one road between the roads on which the specified vehicles are driving. If distance cannot be found, value 99000 is returned",
         "argc":2,
         "argv":{
-            "vehicleid1":0,
-            "vehicleid2":1
+            "Vehicle ID (1)":0,
+            "Vehicle ID (2)":1
         }
     },
     "getWipers":{
         "name":"Wiper State",
         "function":"mice.getWipers(%s)",
         "class":"Vehicle",
+        "description":"This function returns the position of the front wipers. 0 for OFF. 1 for INTERMITTENT_1. 2 for INTERMITTENT_2. 3 for INTERMITTENT_3. 4 for NORMAL. 5 for FAST. 6 for AUTOMATIC (depends on rain: setRain). This function only works on interactive vehicles",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getRearWipers":{
         "name":"Rear Wiper State",
         "function":"mice.getRearWiper(%s)",
         "class":"Vehicle",
+        "description":"This function returns the position of the rear wipers. 0 for OFF. 1 for INTERMITTENT_1. 2 for INTERMITTENT_2. 3 for INTERMITTENT_3. 4 for NORMAL. 5 for FAST. 6 for AUTOMATIC (depends on rain: setRain). This function only works on interactive vehicles",
         "argc":1,
         "argv":{
-            "vehicleid":0
-        }
-    },
-    "getBrakesTemperature":{
-        "name":"Brake Temperature",
-        "function":"mice.getBrakesTemperature(%s)",
-        "class":"Vehicle",
-        "argc":1,
-        "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     },
     "getVehicleClass":{
         "name":"Vehicle Class",
         "function":"mice.getVehicleClass(%s)",
         "class":"Vehicle",
+        "description":"Returns the \"class\" of the vehicle, which can be :(2) INTERACTIVE : a vehicle driven by a driver using a simulator, or using the mouse and the keyboard. (1) AUTONOMOUS : a vehicle automatically driven by the computer. (0) UNKNOWN : for future extensions. By default, a vehicle is AUTONOMOUS.",
         "argc":1,
         "argv":{
-            "vehicleid":0
+            "Vehicle ID":0
         }
     }
   }

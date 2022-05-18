@@ -8,10 +8,8 @@ geAngularVelocityVector
 getAppearBackRadius
 getAppearFrontRadius
 getBrakePedal
-getBrakesTemperature
 getCartesianDistance
 getCloudDensity
-getClutchPedal
 getCollisionState
 getConsumption
 getCurrentTask
@@ -67,6 +65,7 @@ getWaterOnRoad
 getWipers
 
 Add to List:
+"is" type functions
 getClosestVehicleToPoint
 getDistanceToNextSignal
 getGroundId
