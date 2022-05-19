@@ -1,45 +1,54 @@
 #python version 3.7.2
+#import packages from graphics
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 
+#import packages for file and data management
 import configparser
 import json
 from collections import OrderedDict#for reading from the json maintaining order of the dictionary
 
+#import os and subprocess for path configurations and external program openings
 import os
 import subprocess
 
+#create the window class
 class Window:
-    def __init__(self,master):
+    def __init__(self,master,currentconfig):
         self.master = master
 
         self.recent = ""
+        self.finallist = currentconfig
+
+        for s  in range(1,15,2):
+            self.separator = ttk.Separator(self.master,orient="horizontal")
+            self.separator.grid(row=s,column=0,columnspan=6,sticky="ew",pady=5)
+
+        self.headerframe = Frame(self.master)
         #header label
-        self.header = Label(self.master,text="Description:",font=config.get('guidata','headerfont'))
-        self.header.grid(row=0,column=0,columnspan=6)
+        self.header = Label(self.headerframe,text="Description:",font=config.get('guidata','headerfont'))
+        self.header.pack()
         #configurator description
-        self.description = Label(self.master,text="Use this application to configure the data exporting from SCANeR Studio.\nAny changes will affect data collected in future simulations",font=config.get('guidata','bodyfont'))
-        self.description.grid(row=1,column=0,columnspan=6)
+        self.description = Label(self.headerframe,text="Use this application to configure the data exporting from SCANeR Studio.\nAny changes will affect data collected in future simulations",font=config.get('guidata','bodyfont'))
+        self.description.pack()
 
         #instructions
-        self.instructions = Label(self.master,text="Add items to the list of current fields by selecting from the avaiable fields and pressing \"ADD\".\nRemove any fields from the current list by selecting a field and pressing \"REMOVE\".\nOrder the list by pressing \"MOVE UP\" and \"MOVE DOWN\".\nEdit any field properties in the properties section",font=config.get('guidata','smallerfont'))
-        self.instructions.grid(row=2,column=0,columnspan=6)
-        #separator for visuals
-        self.separator1 = ttk.Separator(self.master,orient="horizontal")
-        self.separator1.grid(row=3,column=0,columnspan=6,sticky="ew",pady=5)
+        self.instructions = Label(self.headerframe,text="Add items to the list of current fields by selecting from the avaiable fields and pressing \"ADD\".\nRemove any fields from the current list by selecting a field and pressing \"REMOVE\".\nOrder the list by pressing \"MOVE UP\" and \"MOVE DOWN\".\nEdit any field properties in the properties section",font=config.get('guidata','smallerfont'))
+        self.instructions.pack()
+        self.headerframe.grid(row=0,column=0,columnspan=6)
 
+        self.centerframe = Frame(self.master)
         #headers for the selection lists
-        self.listheaders = Frame(self.master)
+        self.listheaders = Frame(self.centerframe)
         currentlabel = Label(self.listheaders,text="Current Fields:",font=config.get('guidata','headerfont'))
         currentlabel.pack(side="left",fill=BOTH,padx=75)
 
         self.selectlabel = Label(self.listheaders,text="Available Fields:",font=config.get('guidata','headerfont'))
         self.selectlabel.pack(side="right",fill=BOTH,padx=75)
-        self.listheaders.grid(row=4,column=0,columnspan=6)
+        self.listheaders.pack(side="top")
 
         #field boxes
-        self.centerframe = Frame(self.master)
         self.rightframe = Frame(self.centerframe)
         self.selectlist = Listbox(self.rightframe,selectmode=SINGLE,font=config.get('guidata','smallfont'),activestyle='none',width=25,bd=3)
         self.selectlist.bind("<<ListboxSelect>>",lambda event,directed="right":self.__update(directed))
@@ -60,6 +69,8 @@ class Window:
         self.leftframe = Frame(self.centerframe)
         self.includelist = Listbox(self.leftframe,selectmode=SINGLE,font=config.get('guidata','smallfont'),activestyle='none',width=25,bd=3)
         self.includelist.bind("<<ListboxSelect>>",lambda event,directed="left":self.__update(directed))
+        for d in range(len(self.finallist)):
+            self.includelist.insert(d,self.finallist[d]["name"])
 
         self.includelist.pack(side="left",fill=BOTH)
 
@@ -70,11 +81,7 @@ class Window:
         self.scrollbarleft.config(command=self.includelist.yview)
 
         self.leftframe.pack(side="left",fill=BOTH,padx=30)
-        self.centerframe.grid(row=5,column=0,columnspan=6)
-
-    #separator
-        self.separator2 = ttk.Separator(self.master,orient="horizontal")
-        self.separator2.grid(row=6,column=0,columnspan=6,sticky="ew",pady=5)
+        self.centerframe.grid(row=2,column=0,columnspan=6)
 
         #list manager buttons
         self.listmanagerbuttons = Frame(self.master)
@@ -86,17 +93,13 @@ class Window:
         self.down.grid(row=0,column=2,columnspan=1,padx=2)
         self.add = Button(self.listmanagerbuttons,text="<-- ADD",font=config.get('guidata','bodyfont'),command=self.__addinclude,width=15)
         self.add.grid(row=0,column=3,columnspan=1,padx=2)
-        self.listmanagerbuttons.grid(row=7,column=0,columnspan=6)
+        self.listmanagerbuttons.grid(row=4,column=0,columnspan=6)
 
-        #separator
-        self.separator3 = ttk.Separator(self.master,orient="horizontal")
-        self.separator3.grid(row=8,column=0,columnspan=6,sticky="ew",pady=5)
-
-        self.propheader = Label(self.master,text="Field Properties",font=config.get('guidata','headerfont'),anchor="w")
-        self.propheader.grid(row=9,column=0,columnspan=6,sticky="ew",padx=5,pady=5)
+        self.propframe = Frame(self.master)
+        self.propheader = Label(self.propframe,text="Field Properties",font=config.get('guidata','headerfont'),anchor="w")
+        self.propheader.pack(side="top",fill=BOTH)
 
         #property frame
-        self.propframe = Frame(self.master)
         self.descriptionframe = Frame(self.propframe)
 
         self.descriptionscroll = Scrollbar(self.descriptionframe,orient='vertical')
@@ -119,30 +122,24 @@ class Window:
         self.noentry.pack()
         self.field.pack()
 
-        self.finallist = []
+        self.propframe.grid(row=6,column=0,columnspan=6,sticky="ew")
 
-        self.propframe.grid(row=10,column=0,columnspan=6,sticky="ew")
+        self.filenameframe = Frame(self.master)
 
-        #separator
-        self.separator4 = ttk.Separator(self.master,orient="horizontal")
-        self.separator4.grid(row=11,column=0,columnspan=6,sticky="ew",pady=5)
+        self.filenamedesc = Label(self.filenameframe,text="The date and time of the simulation will be added to the file name during setup",font=config.get('guidata','smallfont'))
+        self.filenamedesc.pack(side="bottom",fill=BOTH)
 
-        self.filename = Label(self.master, text = "Save as: ",font=config.get('guidata','smallfont'),anchor="e")
-        self.filename.grid(row=12,column=1,columnspan=1,sticky="e")
+        self.filename = Label(self.filenameframe, text = "Save as: ",font=config.get('guidata','smallfont'),anchor="e")
+        self.filename.pack(side="left",fill=BOTH,expand=True)
 
-        self.nameentry = Entry(self.master,font=config.get('guidata','smallfont'))
+        self.nameentry = Entry(self.filenameframe,font=config.get('guidata','smallfont'))
         self.nameentry.insert("1",config.get('general','name'))
-        self.nameentry.grid(row=12,column=2,columnspan=2,sticky="ew")
+        self.nameentry.pack(side="left",fill=BOTH,expand=True)
 
-        self.suffix = Label(self.master,text=config.get('fixed','suffix'),font=config.get('guidata','smallfont'),anchor="w")
-        self.suffix.grid(row=12,column=4,columnspan=1,sticky="w")
-
-        self.filenamedesc = Label(self.master,text="The date and time of the simulation will be added to the file name during setup",font=config.get('guidata','smallfont'))
-        self.filenamedesc.grid(row=13,column=0,columnspan=6)
-
-        #separator
-        self.separator5 = ttk.Separator(self.master,orient="horizontal")
-        self.separator5.grid(row=14,column=0,columnspan=6,sticky="ew",pady=5)
+        self.suffix = Label(self.filenameframe,text=config.get('fixed','suffix'),font=config.get('guidata','smallfont'),anchor="w")
+        self.suffix.pack(side="left",fill=BOTH,expand=True)
+        
+        self.filenameframe.grid(row=8,column=0,columnspan=6,sticky="ew")
 
         #save and cancel buttons
         self.exitframe = Frame(self.master)
@@ -151,22 +148,20 @@ class Window:
 
         self.save = Button(self.exitframe,text="Cancel Configuration",font=config.get('guidata','bodyfont'),bg='red',command=self.__cancelbox)
         self.save.pack(side="right",fill=BOTH,padx=50,pady=5)
-        self.exitframe.grid(row=15,column=0,columnspan=6)
+        self.exitframe.grid(row=10,column=0,columnspan=6)
 
         #separator
         self.separator6 = ttk.Separator(self.master,orient="horizontal")
-        self.separator6.grid(row=16,column=0,columnspan=6,sticky="ew",pady=5)
+        self.separator6.grid(row=11,column=0,columnspan=6,sticky="ew",pady=5)
         
+        self.filelocationframe = Frame(self.master)
         #file location
-        self.location = Label(self.master,text="Data files are created and stored in the folder below during the simulation.\nFile Location:" + config.get('guipaths','data'),font=config.get('guidata','smallfont'))
-        self.location.grid(row=17,column=0,columnspan=6)
+        self.location = Label(self.filelocationframe,text="Data files are created and stored in the folder below during the simulation.\nFile Location:" + config.get('guipaths','data'),font=config.get('guidata','smallfont'))
+        self.location.pack(side="top")
 
-        self.opendata = Button(self.master,text="Open File Location",font=config.get('guidata','smallfont'),command=self.__openfilelocation)
-        self.opendata.grid(row=18,column=0,columnspan=6)
-
-        #separator
-        self.separator7 = ttk.Separator(self.master,orient="horizontal")
-        self.separator7.grid(row=19,column=0,columnspan=6,sticky="ew",pady=5)
+        self.opendata = Button(self.filelocationframe,text="Open File Location",font=config.get('guidata','smallfont'),command=self.__openfilelocation)
+        self.opendata.pack(side="bottom")
+        self.filelocationframe.grid(row=12,column=0,columnspan=6,sticky="ew")
 
     def __update(self,directed):
         leftselect = self.includelist.curselection()
@@ -257,12 +252,14 @@ class Window:
                         data = secondary.get()
                         fielddata.append(data)
             func["argv"] = dict(zip(list(func["argv"].keys()),fielddata))
-            self.finallist.append(func)
+            # print(func)
+            self.finallist.append(func.copy())
+            print(self.finallist)
             # print(self.finallist)
         except Exception:
             pass
 
-    def __removeinclude(self):
+    def __removeinclude(self):#removes item from list
         try:
             selection = self.includelist.curselection()
             self.includelist.delete(self.includelist.curselection())
@@ -272,7 +269,7 @@ class Window:
         except Exception:
             pass
 
-    def __moveup(self):
+    def __moveup(self):#moves item up in the left list
         try:
             current = self.includelist.curselection()[0]
             if not current:
@@ -280,49 +277,66 @@ class Window:
             text = self.includelist.get(current)
             self.includelist.delete(current)
             self.includelist.insert(current-1,text)
+
+            self.finallist[current-1],self.finallist[current] = self.finallist[current],self.finallist[current-1]
         except Exception:
             pass
             
-    def __movedown(self):
+    def __movedown(self):#moves item down in the left list
         try:
             current = self.includelist.curselection()[0]
             text=self.includelist.get(current)
             self.includelist.delete(current)
             self.includelist.insert(current+1, text)
+
+            self.finallist[current+1],self.finallist[current] = self.finallist[current],self.finallist[current+1]
         except Exception:
             pass
 
 #file names cannot have \/:*?"<>|
-#warn that settings are unverified (for vehicles that dont exist)
     def __savebox(self):
         functionnames = list(range(len(self.finallist)))
         finalwrite = dict(zip(functionnames,self.finallist))
-        # print(finalwrite)
-        with open(config.get('guipaths','included'),"w") as included:
-            json.dump(finalwrite,included)
 
-        messagebox.showwarning('Saving...','All settings are unverfied and may not operate as intended. Errors may arise during simulation process',icon='info')
-        self.master.destroy()
+        nameoffile = self.nameentry.get()
 
-def initpath():
+
+        #TODO: Check and update the file name
+        badchars = "\/:*?<>|"
+        if not any(c in nameoffile for c in badchars):
+            config.set('general','name',nameoffile)
+            with open("settings.cfg","w") as configfile:
+                config.write(configfile)
+
+            # print(finalwrite)
+            with open(config.get('guipaths','included'),"w") as included:
+                json.dump(finalwrite,included)
+
+            messagebox.showwarning('Saving...','All settings are unverfied and may not operate as intended. Errors may arise during simulation process',icon='info')
+            self.master.destroy()
+        else:
+            messagebox.showerror('Save Failed','File names cannot contain any of the following characters: \/:*?<>|')
+
+def initpath():#initialize the path to the directory that SCANeR Studio uses
     if str(os.getcwd()) != 'C:\\OKTAL\\SCANeRstudio_1.6\\data\GUELPH_DATA_1.6\\script\\python':
             os.chdir('C:\\OKTAL\\SCANeRstudio_1.6\\data\GUELPH_DATA_1.6\\script\\python')#this is the path that the python directory should be working from
 
-initpath()
-
+initpath()#initializes the working directory
+#set up the configuration file parser
 config = configparser.ConfigParser()
 config.read("settings.cfg")
 
+#defaults are read into a list of function dictionary definitions
 defaults = (json.load((open(config.get('guipaths','defaults'),encoding="utf8")),object_pairs_hook=OrderedDict)).values()
-fields = [h["name"] for h in defaults if "name" in h]
+fields = [h["name"] for h in defaults if "name" in h]#fields are the function names accessed by the field name
 
-
-includefields = []
+included = list((json.load((open(config.get('guipaths','included'),encoding="utf8")),object_pairs_hook=OrderedDict)).values())
 
 root = Tk()
-window = Window(root)
-#set title and minimum size
+window = Window(root,included)
+#set title, size and disable resize
 root.resizable(False,False)
 root.title(config.get('guidata','main'))
+root.iconbitmap("export.ico")
 root.minsize(config.get('guidata','width'),config.get('guidata','height'))
 root.mainloop()

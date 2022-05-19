@@ -86,7 +86,7 @@
         "function":"mice.getAcceleratorPedal(0)",
         "class":"Position",
         "description":"Returns the position of accelerator pedal, between 0 (released) and 1 (pressed). This function only works on interactive vehicles.",
-        "argc":1,
+        "argc":0,
         "argv":{}
     },
     "getAccelerationX":{
@@ -330,7 +330,7 @@
         "function":"mice.getGearbox(0)",
         "class":"Vehicle",
         "description":"Returns the physical position of the gearbox lever. This function only works on interactive vehicles. 0 (if the vehicle is not interactive). For car: -7 for SEQUENTIAL_DOWN(robotized sequential gearbox), -6 for SEQUENTIAL_NEUTRAL(robotized sequential gearbox), -5 for SEQUENTIAL_UP(robotized sequential gearbox), -4 for PARK(automatic or robotized gearbox), -3 for DRIVE(automatic or robotized automatic gearbox), -1 forREVERSE(automatic, robotized or manual gearbox), 0 for NEUTRAL(automatic, robotized or manual gearbox), 1, ..,5(automatic, robotized or manual gearbox)",
-        "argc":1,
+        "argc":0,
         "argv":{}
     },
     "getGearEngaged":{
@@ -338,7 +338,7 @@
         "function":"mice.getGearEngaged(0)",
         "class":"Vehicle",
         "description":"Returns the real gear engaged in the motor. -1 (if the vehicle is not interactive). For car: -1 to 5",
-        "argc":1,
+        "argc":0,
         "argv":{}
     },
     "getHeadlights":{
