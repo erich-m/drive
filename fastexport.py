@@ -88,6 +88,9 @@ def main():
         print("python version: ",sys.version_info)
         print("python path: ",sys.executable)
 
+        for p in sys.path:
+            print(p)
+
         print(dir(mice))
 
         #set up the file name from the configuration settings file
@@ -122,9 +125,3 @@ def main():
 
     writer.writerclose()#close the file
     return 1#return 1 on success
-
-    #*Complete By Wednesday
-    #TODO: Do testing of the entire list of functions so far
-    #TODO: Create GUI to edit the JSON file of includes...pull the function defs from the defaults.json
-    #TODO: Add to Barbs study for pilot test
-    #TODO: Add the rest of the applicable "Get" methods to the defaults.json file such as getClosestVehicleToPoint
