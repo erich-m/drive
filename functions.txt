@@ -66,6 +66,20 @@ getWipers
 
 Add to List:
 "is" type functions
+isActivated
+isCollisionDetected
+isDamageDetected
+isOnIntersection
+isOnPortion
+isOnSubNetwork
+isOnTrack
+isQueen
+isScenarioBeginning
+isScriptActivated
+isTaskBeginning
+isTriggerActivated
+isTriggerActivatedisTriggeredVehicle
+isVisible
 getClosestVehicleToPoint
 getDistanceToNextSignal
 getGroundId
@@ -102,6 +116,12 @@ getVehicleTech
 
 
 Not in default list:
+isItineraryNotCorrect
+isLeftLaneAllowed
+isPedestrianCrossing
+isPhysicsCollisionDetected
+isRightLaneAllowed
+
 getBarrier
 getConfigFilePath
 getCustomInput
