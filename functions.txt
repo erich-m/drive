@@ -121,7 +121,6 @@ isLeftLaneAllowed
 isPedestrianCrossing
 isPhysicsCollisionDetected
 isRightLaneAllowed
-
 getBarrier
 getConfigFilePath
 getCustomInput

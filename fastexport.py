@@ -90,7 +90,6 @@ def main():
 
         for p in sys.path:
             print(p)
-
         print(dir(mice))
 
         #set up the file name from the configuration settings file
