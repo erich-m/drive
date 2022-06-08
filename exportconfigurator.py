@@ -1,6 +1,5 @@
 #python version 3.7.2
 #import packages from graphics
-from doctest import master
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
@@ -14,31 +13,59 @@ from collections import OrderedDict#for reading from the json maintaining order 
 import os
 import subprocess
 
-import copy
 
+#create the window class
+class Window:
+    def __init__(self,master):
+        self.master = master
 
-
-class Window(Tk):
-    def __init__(self,name,w,h):
-        super().__init__()
-        self.title(name)
-        self.minsize(w,h)
-        self.resizable(False,False)
-
-        self.frame = Frame(self)
-        self.label = Label(self.frame,text="Hello World")
-        self.label.pack()
-        self.frame.pack()
-
-class GeneralFrame(ttk.Frame):
-    def __init__(self,parent,child):
-        super().__init__()
+        #create the header frame
+        self.header = Frame(self.master,highlightthickness=3,highlightbackground="black")
         
+        self.title = Label(self.header,text="Description",font=config.get('guidata','headerfont'))
+        self.description = Label(self.header,text="Use this application to configure the data exporting from SCANeR Studio.\nAny changes will affect data collected in future simulations",font=config.get('guidata','bodyfont'))
+        self.instructions = Label(self.header,text="Add items to the list of current fields by selecting from the avaiable fields and pressing \"ADD\".\nRemove any fields from the current list by selecting a field and pressing \"REMOVE\".\nOrder the list by pressing \"MOVE UP\" and \"MOVE DOWN\".\nEdit any field properties in the properties section",font=config.get('guidata','smallerfont'))
+        self.title.pack()
+        self.description.pack()
+        self.instructions.pack()
 
+        self.header.pack(expand=True,fill='x')
+        #create the header frame
 
-window = Window("Export Configuration Manager",200,400)
-window.mainloop()
+        #list frames
+        self.listframe = Frame(self.master,highlightthickness=3,highlightbackground="black")
+        self.listheaderframe = Frame(self.listframe)
+        self.leftlabel = Label(self.listheaderframe,text="Current Fields",font=config.get('guidata','headerfont'))
+        self.rightlabel = Label(self.listheaderframe,text="Available Fields",font=config.get('guidata','headerfont'))
+        
+        
+        
+        self.leftlabel.pack(side=LEFT,expand=True)
+        self.rightlabel.pack(side=RIGHT,expand=True)
+        self.listheaderframe.pack(expand=True,fill='x')
+        self.listframe.pack(expand=True,fill='x')
+        #list frames
 
+def initpath():#initialize the path to the directory that SCANeR Studio uses
+    if str(os.getcwd()) != 'C:\\OKTAL\\SCANeRstudio_1.6\\data\GUELPH_DATA_1.6\\script\\python':
+            os.chdir('C:\\OKTAL\\SCANeRstudio_1.6\\data\GUELPH_DATA_1.6\\script\\python')#this is the path that the python directory should be working from
 
+initpath()#initializes the working directory
+#set up the configuration file parser
+config = configparser.ConfigParser()
+config.read("settings.cfg")
 
+#defaults are read into a list of function dictionary definitions
+defaults = (json.load((open(config.get('guipaths','defaults'),encoding="utf8")),object_pairs_hook=OrderedDict)).values()
+fields = [h["name"] for h in defaults if "name" in h]#fields are the function names accessed by the field name
 
+included = list((json.load((open(config.get('guipaths','included'),encoding="utf8")),object_pairs_hook=OrderedDict)).values())
+
+root = Tk()
+window = Window(root)
+#set title, size and disable resize
+root.resizable(False,False)
+root.title(config.get('guidata','main'))
+root.iconbitmap("export.ico")
+root.minsize(config.get('guidata','width'),config.get('guidata','height'))
+root.mainloop()
