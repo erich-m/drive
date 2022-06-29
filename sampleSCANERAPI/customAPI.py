@@ -4,7 +4,9 @@ import sys
 import os
 from optparse import OptionParser
 
-path = os.path.join(os.getcwd(),"sampleSCANERAPI\SCANeR_API_C.1.6.dll")
+path = os.getcwd() +"\sampleSCANERAPI\SCANeR_API.dll"
+path = path.replace('\\','\\\\')
+print("Path: " + path)
 scanerAPI = CDLL(path)
 
 #define the data structures
