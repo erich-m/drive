@@ -34,15 +34,7 @@ class Window:
 
         #list frames
         self.listframe = Frame(self.master,highlightthickness=3,highlightbackground="black")
-        self.listheaderframe = Frame(self.listframe)
-        self.leftlabel = Label(self.listheaderframe,text="Current Fields",font=config.get('guidata','headerfont'))
-        self.rightlabel = Label(self.listheaderframe,text="Available Fields",font=config.get('guidata','headerfont'))
-        
-        
-        
-        self.leftlabel.pack(side=LEFT,expand=True)
-        self.rightlabel.pack(side=RIGHT,expand=True)
-        self.listheaderframe.pack(expand=True,fill='x')
+        self.leftframe = Frame
         self.listframe.pack(expand=True,fill='x')
         #list frames
 
