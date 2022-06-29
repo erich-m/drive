@@ -1,38 +1,38 @@
 #!/usr/bin/python
-import ctypes
+from ctypes import *
 import sys
 import os
 from optparse import OptionParser
 
 if (os.name == 'nt'):
     print("working directory: " + os.getcwd())
-    scaner_api = ctypes.CDLL(r"C:\OKTAL\SCANeRstudio_1.6\APIs\samples\ScanerAPI\python\SCANeR_API_C.1.6.dll")
+    scaner_api = CDLL(r"C:\OKTAL\SCANeRstudio_1.6\APIs\samples\ScanerAPI\python\SCANeR_API_C.1.6.dll")
 else:
-    scaner_api = ctypes.CDLL('libScanerAPI.so')
+    scaner_api = CDLL('libScanerAPI.so')
 
 #structures first
-class DataInterface(ctypes.Structure):
+class DataInterface(Structure):
     pass
 
-class FieldInfo(ctypes.Structure):
-    _fields_ = [("name", ctypes.c_char * 256),
-                ("type_name", ctypes.c_char * 256)]
+class FieldInfo(Structure):
+    _fields_ = [("name", c_char * 256),
+                ("type_name", c_char * 256)]
 
-class Position(ctypes.Structure):
-    _fields_ = [("x", ctypes.c_double),
-                ("y", ctypes.c_double),
-                ("z", ctypes.c_double)]
+class Position(Structure):
+    _fields_ = [("x", c_double),
+                ("y", c_double),
+                ("z", c_double)]
     def __str__(self):
         return "(" + str(self.x) + " " + str(self.y) + " " + str(self.z) + ")"
                 
-class Vehicle(ctypes.Structure):
-    _fields_ = [("id", ctypes.c_int),
-                ("vehicleName", ctypes.c_char * 256),
-                ("type", ctypes.c_int),
-                ("behaviour", ctypes.c_int),
-                ("state", ctypes.c_int),
+class Vehicle(Structure):
+    _fields_ = [("id", c_int),
+                ("vehicleName", c_char * 256),
+                ("type", c_int),
+                ("behaviour", c_int),
+                ("state", c_int),
                 ("initPosition", Position),
-                ("heading", ctypes.c_double)]
+                ("heading", c_double)]
                 
     def __str__(self):
         return "id: {0}\nname: {1}\ntype: {2}\nbehaviour: {3}\nstate: {4}\n"\
@@ -94,30 +94,30 @@ class Vehicle(ctypes.Structure):
         if state == V_UNKNOWN:
             return "V_UNKNOWN"
 
-class Vehicle(ctypes.Structure):
-    _fields_ = [("id", ctypes.c_int),
-                ("name", ctypes.c_char * 256),
-                ("mass", ctypes.c_double),
-                ("static_object", ctypes.c_char),
-                ("state", ctypes.c_int),
+class Vehicle(Structure):
+    _fields_ = [("id", c_int),
+                ("name", c_char * 256),
+                ("mass", c_double),
+                ("static_object", c_char),
+                ("state", c_int),
                 ("init_position", Position),
-                ("heading", ctypes.c_double),
-                ("name", ctypes.c_byte * 256),
-                ("has_heighmap", ctypes.c_char),
+                ("heading", c_double),
+                ("name", c_byte * 256),
+                ("has_heighmap", c_char),
                 ("scale", Position),
-                ("friction", ctypes.c_double),
-                ("rolling_frition", ctypes.c_double),
+                ("friction", c_double),
+                ("rolling_frition", c_double),
                 ]
                 
 MAX_VEHICLES_NUMBER = 512
 MAX_OBJECTS_NUMBER = 512
 
-class  InitialConditions(ctypes.Structure):
-    _fields_ = [("scenario_name", ctypes.c_char * 256), 
-            ("terrain_name", ctypes.c_char * 256),
-            ("vehicles_count", ctypes.c_int),
+class  InitialConditions(Structure):
+    _fields_ = [("scenario_name", c_char * 256), 
+            ("terrain_name", c_char * 256),
+            ("vehicles_count", c_int),
             ("vehicles", Vehicle * MAX_VEHICLES_NUMBER),
-            ("objects_count", ctypes.c_int),
+            ("objects_count", c_int),
             ("objects", Vehicle * MAX_VEHICLES_NUMBER)]
 
             
@@ -135,65 +135,65 @@ class  InitialConditions(ctypes.Structure):
             
         return static_str + vehicles_str
 
-class APIProcessInfo(ctypes.Structure):
+class APIProcessInfo(Structure):
     MAX_PROCNAME_SIZE=255
     MAX_HOSTNAME_SIZE=255
-    _fields_ = [("state", ctypes.c_int),
-                ("name", ctypes.c_char*MAX_PROCNAME_SIZE),
-                ("frequency", ctypes.c_float),
-                ("desiredFrequency", ctypes.c_float),
-                ("hostname", ctypes.c_char*MAX_HOSTNAME_SIZE)]
+    _fields_ = [("state", c_int),
+                ("name", c_char*MAX_PROCNAME_SIZE),
+                ("frequency", c_float),
+                ("desiredFrequency", c_float),
+                ("hostname", c_char*MAX_HOSTNAME_SIZE)]
 #functions
-scaner_api.Process_InitParams.argtypes = [ctypes.c_char_p, ctypes.c_char_p, ctypes.c_float]
-scaner_api.Process_GetId.restype = ctypes.c_int
-scaner_api.Process_GetTime.restype = ctypes.c_double
-scaner_api.Process_GetRecordDir.restype = ctypes.c_char_p
+scaner_api.Process_InitParams.argtypes = [c_char_p, c_char_p, c_float]
+scaner_api.Process_GetId.restype = c_int
+scaner_api.Process_GetTime.restype = c_double
+scaner_api.Process_GetRecordDir.restype = c_char_p
 
-scaner_api.Com_declareInputData.restype = ctypes.c_void_p
-scaner_api.Com_releaseInterface.argtypes = [ctypes.c_void_p]
-scaner_api.Com_validateStateEvent.argtypes = [ctypes.c_void_p]
-scaner_api.Com_getShortData.restype = ctypes.c_short
-scaner_api.Com_getCharData.restype = ctypes.c_byte
-scaner_api.Com_getFloatData.restype = ctypes.c_float
-scaner_api.Com_getDoubleData.restype = ctypes.c_double
-scaner_api.Com_getStringData.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
-scaner_api.Com_getStringData.restype = ctypes.c_char_p
-scaner_api.Com_getNextEvent.restype = ctypes.c_void_p
-scaner_api.Com_getMessageEventDataStringId.restype = ctypes.c_char_p
-scaner_api.Com_getInitConditions.restype = ctypes.POINTER(InitialConditions)
-scaner_api.Com_getInitConditions.argtypes = [ctypes.c_void_p]
+scaner_api.Com_declareInputData.restype = c_void_p
+scaner_api.Com_releaseInterface.argtypes = [c_void_p]
+scaner_api.Com_validateStateEvent.argtypes = [c_void_p]
+scaner_api.Com_getShortData.restype = c_short
+scaner_api.Com_getCharData.restype = c_byte
+scaner_api.Com_getFloatData.restype = c_float
+scaner_api.Com_getDoubleData.restype = c_double
+scaner_api.Com_getStringData.argtypes = [c_void_p, c_char_p]
+scaner_api.Com_getStringData.restype = c_char_p
+scaner_api.Com_getNextEvent.restype = c_void_p
+scaner_api.Com_getMessageEventDataStringId.restype = c_char_p
+scaner_api.Com_getInitConditions.restype = POINTER(InitialConditions)
+scaner_api.Com_getInitConditions.argtypes = [c_void_p]
 
-scaner_api.Com_getTypeEvent.argtypes = [ctypes.c_void_p]
-scaner_api.Com_getStateEventType.argtypes = [ctypes.c_void_p]
+scaner_api.Com_getTypeEvent.argtypes = [c_void_p]
+scaner_api.Com_getStateEventType.argtypes = [c_void_p]
 
-scaner_api.Com_setShortData.argtypes = [ctypes.c_void_p, ctypes.c_char_p, ctypes.c_short]
-scaner_api.Com_setLongData.argtypes = [ctypes.c_void_p, ctypes.c_char_p, ctypes.c_long]
-scaner_api.Com_setCharData.argtypes = [ctypes.c_void_p, ctypes.c_char_p, ctypes.c_byte]
-scaner_api.Com_setFloatData.argtypes =  [ctypes.c_void_p, ctypes.c_char_p, ctypes.c_float]
-scaner_api.Com_setDoubleData.argtypes =  [ctypes.c_void_p, ctypes.c_char_p, ctypes.c_double]
-scaner_api.Com_setStringData.argtypes = [ctypes.c_void_p, ctypes.c_char_p, ctypes.c_char_p]
+scaner_api.Com_setShortData.argtypes = [c_void_p, c_char_p, c_short]
+scaner_api.Com_setLongData.argtypes = [c_void_p, c_char_p, c_long]
+scaner_api.Com_setCharData.argtypes = [c_void_p, c_char_p, c_byte]
+scaner_api.Com_setFloatData.argtypes =  [c_void_p, c_char_p, c_float]
+scaner_api.Com_setDoubleData.argtypes =  [c_void_p, c_char_p, c_double]
+scaner_api.Com_setStringData.argtypes = [c_void_p, c_char_p, c_char_p]
 
-scaner_api.Utils_getPath.argtypes = [ctypes.c_char_p]
-scaner_api.Utils_getPath.restype = ctypes.c_char_p
+scaner_api.Utils_getPath.argtypes = [c_char_p]
+scaner_api.Utils_getPath.restype = c_char_p
 
-scaner_api.Utils_getMultiplePath.argtypes = [ctypes.c_char_p]
-scaner_api.Utils_getMultiplePath.restype = ctypes.POINTER(ctypes.c_char_p)
+scaner_api.Utils_getMultiplePath.argtypes = [c_char_p]
+scaner_api.Utils_getMultiplePath.restype = POINTER(c_char_p)
 
-scaner_api.Simulation_InitParams.argtypes = [ctypes.c_char_p, ctypes.c_float]
-scaner_api.Simulation_Launch.restype = ctypes.c_byte
-scaner_api.Simulation_LoadScenario.restype = ctypes.c_byte
-scaner_api.Simulation_Play.restype = ctypes.c_byte
-scaner_api.Simulation_Pause.restype = ctypes.c_byte
-scaner_api.Simulation_UnLoad.restype = ctypes.c_byte
-scaner_api.Simulation_Stop.restype = ctypes.c_byte
-scaner_api.Simulation_KillAllProcesses.restype = ctypes.c_byte
-scaner_api.Simulation_AllProcessesOk.restype = ctypes.c_byte
-scaner_api.Simulation_WaitForState.restype = ctypes.c_byte
-scaner_api.Simulation_StartProcess.restype = ctypes.c_byte
-scaner_api.Simulation_GetProcessInfo.restype = ctypes.c_byte
-scaner_api.Simulation_IsProcessAutoLaunched.restype = ctypes.c_byte
-scaner_api.Simulation_Shutdown.restype = ctypes.c_byte
-scaner_api.Simulation_setVarEnv.restype = ctypes.c_byte
+scaner_api.Simulation_InitParams.argtypes = [c_char_p, c_float]
+scaner_api.Simulation_Launch.restype = c_byte
+scaner_api.Simulation_LoadScenario.restype = c_byte
+scaner_api.Simulation_Play.restype = c_byte
+scaner_api.Simulation_Pause.restype = c_byte
+scaner_api.Simulation_UnLoad.restype = c_byte
+scaner_api.Simulation_Stop.restype = c_byte
+scaner_api.Simulation_KillAllProcesses.restype = c_byte
+scaner_api.Simulation_AllProcessesOk.restype = c_byte
+scaner_api.Simulation_WaitForState.restype = c_byte
+scaner_api.Simulation_StartProcess.restype = c_byte
+scaner_api.Simulation_GetProcessInfo.restype = c_byte
+scaner_api.Simulation_IsProcessAutoLaunched.restype = c_byte
+scaner_api.Simulation_Shutdown.restype = c_byte
+scaner_api.Simulation_setVarEnv.restype = c_byte
 
 Process_InitParams = scaner_api.Process_InitParams
 Process_Run = scaner_api.Process_Run
@@ -410,7 +410,7 @@ class ScanerApiOption(OptionParser):
             
                           
 def get_main_arg():
-    argv = (ctypes.c_char_p * len(sys.argv))()
+    argv = (c_char_p * len(sys.argv))()
     for i in range(len(sys.argv)):
         argv[i] = sys.argv[i]
     return argv
