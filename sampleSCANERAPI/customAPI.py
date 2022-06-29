@@ -4,10 +4,7 @@ import sys
 import os
 from optparse import OptionParser
 
-path = os.getcwd() +"\sampleSCANERAPI\SCANeR_API.dll"
-path = path.replace('\\','\\\\')
-print("Path: " + path)
-scanerAPI = CDLL(path)
+scanerAPI = CDLL("SCANeR_API.dll")
 
 #define the data structures
 class DataInterface(Structure):

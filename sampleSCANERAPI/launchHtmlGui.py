@@ -86,7 +86,7 @@ class HTMLGui(threading.Thread):
         httpd.timeout = 1
         sa = httpd.socket.getsockname()
         os.chdir(os.path.dirname(os.path.realpath(__file__)))
-        print "serving HTTP on", sa[0], "port", sa[1], "..."
+        print ("serving HTTP on", sa[0], "port", sa[1], "...")
         logging.info("serving HTTP on %s port %s", sa[0], sa[1])
         while not self.stop_server:
             httpd.handle_request()

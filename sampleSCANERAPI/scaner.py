@@ -4,7 +4,7 @@ import sys
 import os
 from optparse import OptionParser
 
-scanerAPI = CDLL('SCANeR_API.dll')
+scanerAPI = CDLL("SCANeR_API.dll")
 
 #define the data structures
 class DataInterface(Structure):
