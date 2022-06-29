@@ -125,7 +125,7 @@ class  InitialConditions(ctypes.Structure):
         static_str = "scenario: {0}\n"\
                 "terrain: {1}\n"\
                 "vehicle count: {2}\n"\
-                "objects_count: {3}".format(self.scenario_name, self.terrain_name, self.vehicles_count, slef.objects_count);
+                "objects_count: {3}".format(self.scenario_name, self.terrain_name, self.vehicles_count, self.objects_count);
                 
         vehicles_str = "";
         for vehicle_index in range(0, self.vehicles_count):
@@ -270,7 +270,7 @@ PS_DAEMON,
 PS_LOADED,
 PS_PAUSED,
 PS_READY,
-PS_RUNNING) = map(int, xrange(6))
+PS_RUNNING) = map(int, range(6))
 
 def state_string(state):
     """return the input state as it's string representation"""
@@ -292,13 +292,13 @@ OL_Debug = 2
 OL_Warning = 3
 OL_Err = 4
 
-(UT_Unknown, UT_AllData, UT_NetworkData, UT_ShmData) = map(int, xrange(4))
+(UT_Unknown, UT_AllData, UT_NetworkData, UT_ShmData) = map(int, range(4))
 
-(ET_message, ET_state, ET_unknown) = map(int, xrange(3))
+(ET_message, ET_state, ET_unknown) = map(int, range(3))
 
-(ST_Unknown, ST_Load, ST_Start, ST_Init, ST_Go, ST_Pause, ST_Stop, ST_Unload, ST_Kill) = map(int, xrange(9))
+(ST_Unknown, ST_Load, ST_Start, ST_Init, ST_Go, ST_Pause, ST_Stop, ST_Unload, ST_Kill) = map(int, range(9))
 
-(V_GHOST, V_VISIBLE, V_ALIVE, V_UNKNOWN) = map(int, xrange(4))
+(V_GHOST, V_VISIBLE, V_ALIVE, V_UNKNOWN) = map(int, range(4))
 
 UNKNOWN_TYPE=0
 RIGID=1
