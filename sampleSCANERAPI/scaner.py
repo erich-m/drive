@@ -4,13 +4,9 @@ import sys
 import os
 from optparse import OptionParser
 
-if (os.name == 'nt'):
-    print("working directory: " + os.getcwd())
-    scaner_api = CDLL(r"C:\OKTAL\SCANeRstudio_1.6\APIs\samples\ScanerAPI\python\SCANeR_API_C.1.6.dll")
-else:
-    scaner_api = CDLL('libScanerAPI.so')
+scanerAPI = CDLL('SCANeR_API.dll')
 
-#structures first
+#define the data structures
 class DataInterface(Structure):
     pass
 
@@ -22,9 +18,11 @@ class Position(Structure):
     _fields_ = [("x", c_double),
                 ("y", c_double),
                 ("z", c_double)]
+
     def __str__(self):
         return "(" + str(self.x) + " " + str(self.y) + " " + str(self.z) + ")"
                 
+
 class Vehicle(Structure):
     _fields_ = [("id", c_int),
                 ("vehicleName", c_char * 256),
@@ -33,66 +31,66 @@ class Vehicle(Structure):
                 ("state", c_int),
                 ("initPosition", Position),
                 ("heading", c_double)]
-                
+
     def __str__(self):
         return "id: {0}\nname: {1}\ntype: {2}\nbehaviour: {3}\nstate: {4}\n"\
                 "initPosition: {5}\n"\
                 "heading: {6}".format(self.id, self.vehicleName, Vehicle.get_type_str(self.type), Vehicle.get_behaviour_str(self.behaviour), Vehicle.get_state_str(self.state), self.initPosition, self.heading)
-    
-    @staticmethod
-    def get_type_str(type):
-        if type == CAR:
-            return "CAR"
-        if type == TRACTOR:
-            return "TRACTOR"
-        if type == SEMI_TRAILER:
-            return "SEMI_TRAILER"
-        if type == TRAILER:
-            return "TRAILER"
-        if type == CAR:
-            return "CAR"
-        if type == BUS:
-            return "BUS"
-        if type == MOTORBIKE:
-            return "MOTORBIKE"
-        if type == BICYCLE:
-            return "BICYCLE"
-        if type == PEDESTRIAN:
-            return "PEDESTRIAN"
-        if type == STATIC_OBJECT:
-            return "STATIC_OBJECT"
-        if type == TRAM:
-            return "TRAM"
-        if type == TRAIN:
-            return "TRAIN"
-        if type == UNKNOWN_TYPE:
-            return "UNKNOWN_TYPE"
-        if type == ALIVEBEING:
-            return "ALIVEBEING"
-            
-    @staticmethod
-    def get_behaviour_str(behaviour):
-        if behaviour == EXTERNAL:
-            return "EXTERNAL"
-        if behaviour == AUTONOMOUS:
-            return "AUTONOMOUS"
-        if behaviour == INTERACTIVE:
-            return "INTERACTIVE"
-        if behaviour == ANIMATED:
-            return "ANIMATED"
-        if behaviour == VB_UNKNONW:
-            return "VB_UNKNONW"
-    
-    @staticmethod
-    def get_state_str(state):
-        if state == V_GHOST:
-            return "V_GHOST"
-        if state == V_VISIBLE:
-            return "V_VISIBLE"
-        if state == V_ALIVE:
-            return "V_ALIVE"
-        if state == V_UNKNOWN:
-            return "V_UNKNOWN"
+
+@staticmethod
+def get_type_str(type):
+    if type == CAR:
+        return "CAR"
+    if type == TRACTOR:
+        return "TRACTOR"
+    if type == SEMI_TRAILER:
+        return "SEMI_TRAILER"
+    if type == TRAILER:
+        return "TRAILER"
+    if type == CAR:
+        return "CAR"
+    if type == BUS:
+        return "BUS"
+    if type == MOTORBIKE:
+        return "MOTORBIKE"
+    if type == BICYCLE:
+        return "BICYCLE"
+    if type == PEDESTRIAN:
+        return "PEDESTRIAN"
+    if type == STATIC_OBJECT:
+        return "STATIC_OBJECT"
+    if type == TRAM:
+        return "TRAM"
+    if type == TRAIN:
+        return "TRAIN"
+    if type == UNKNOWN_TYPE:
+        return "UNKNOWN_TYPE"
+    if type == ALIVEBEING:
+        return "ALIVEBEING"
+        
+@staticmethod
+def get_behaviour_str(behaviour):
+    if behaviour == EXTERNAL:
+        return "EXTERNAL"
+    if behaviour == AUTONOMOUS:
+        return "AUTONOMOUS"
+    if behaviour == INTERACTIVE:
+        return "INTERACTIVE"
+    if behaviour == ANIMATED:
+        return "ANIMATED"
+    if behaviour == VB_UNKNONW:
+        return "VB_UNKNONW"
+
+@staticmethod
+def get_state_str(state):
+    if state == V_GHOST:
+        return "V_GHOST"
+    if state == V_VISIBLE:
+        return "V_VISIBLE"
+    if state == V_ALIVE:
+        return "V_ALIVE"
+    if state == V_UNKNOWN:
+        return "V_UNKNOWN"
 
 class Vehicle(Structure):
     _fields_ = [("id", c_int),
@@ -143,126 +141,127 @@ class APIProcessInfo(Structure):
                 ("frequency", c_float),
                 ("desiredFrequency", c_float),
                 ("hostname", c_char*MAX_HOSTNAME_SIZE)]
+
 #functions
-scaner_api.Process_InitParams.argtypes = [c_char_p, c_char_p, c_float]
-scaner_api.Process_GetId.restype = c_int
-scaner_api.Process_GetTime.restype = c_double
-scaner_api.Process_GetRecordDir.restype = c_char_p
+scanerAPI.Process_InitParams.argtypes = [c_char_p, c_char_p, c_float]
+scanerAPI.Process_GetId.restype = c_int
+scanerAPI.Process_GetTime.restype = c_double
+scanerAPI.Process_GetRecordDir.restype = c_char_p
 
-scaner_api.Com_declareInputData.restype = c_void_p
-scaner_api.Com_releaseInterface.argtypes = [c_void_p]
-scaner_api.Com_validateStateEvent.argtypes = [c_void_p]
-scaner_api.Com_getShortData.restype = c_short
-scaner_api.Com_getCharData.restype = c_byte
-scaner_api.Com_getFloatData.restype = c_float
-scaner_api.Com_getDoubleData.restype = c_double
-scaner_api.Com_getStringData.argtypes = [c_void_p, c_char_p]
-scaner_api.Com_getStringData.restype = c_char_p
-scaner_api.Com_getNextEvent.restype = c_void_p
-scaner_api.Com_getMessageEventDataStringId.restype = c_char_p
-scaner_api.Com_getInitConditions.restype = POINTER(InitialConditions)
-scaner_api.Com_getInitConditions.argtypes = [c_void_p]
+scanerAPI.Com_declareInputData.restype = c_void_p
+scanerAPI.Com_releaseInterface.argtypes = [c_void_p]
+scanerAPI.Com_validateStateEvent.argtypes = [c_void_p]
+scanerAPI.Com_getShortData.restype = c_short
+scanerAPI.Com_getCharData.restype = c_byte
+scanerAPI.Com_getFloatData.restype = c_float
+scanerAPI.Com_getDoubleData.restype = c_double
+scanerAPI.Com_getStringData.argtypes = [c_void_p, c_char_p]
+scanerAPI.Com_getStringData.restype = c_char_p
+scanerAPI.Com_getNextEvent.restype = c_void_p
+scanerAPI.Com_getMessageEventDataStringId.restype = c_char_p
+scanerAPI.Com_getInitConditions.restype = POINTER(InitialConditions)
+scanerAPI.Com_getInitConditions.argtypes = [c_void_p]
 
-scaner_api.Com_getTypeEvent.argtypes = [c_void_p]
-scaner_api.Com_getStateEventType.argtypes = [c_void_p]
+scanerAPI.Com_getTypeEvent.argtypes = [c_void_p]
+scanerAPI.Com_getStateEventType.argtypes = [c_void_p]
 
-scaner_api.Com_setShortData.argtypes = [c_void_p, c_char_p, c_short]
-scaner_api.Com_setLongData.argtypes = [c_void_p, c_char_p, c_long]
-scaner_api.Com_setCharData.argtypes = [c_void_p, c_char_p, c_byte]
-scaner_api.Com_setFloatData.argtypes =  [c_void_p, c_char_p, c_float]
-scaner_api.Com_setDoubleData.argtypes =  [c_void_p, c_char_p, c_double]
-scaner_api.Com_setStringData.argtypes = [c_void_p, c_char_p, c_char_p]
+scanerAPI.Com_setShortData.argtypes = [c_void_p, c_char_p, c_short]
+scanerAPI.Com_setLongData.argtypes = [c_void_p, c_char_p, c_long]
+scanerAPI.Com_setCharData.argtypes = [c_void_p, c_char_p, c_byte]
+scanerAPI.Com_setFloatData.argtypes =  [c_void_p, c_char_p, c_float]
+scanerAPI.Com_setDoubleData.argtypes =  [c_void_p, c_char_p, c_double]
+scanerAPI.Com_setStringData.argtypes = [c_void_p, c_char_p, c_char_p]
 
-scaner_api.Utils_getPath.argtypes = [c_char_p]
-scaner_api.Utils_getPath.restype = c_char_p
+scanerAPI.Utils_getPath.argtypes = [c_char_p]
+scanerAPI.Utils_getPath.restype = c_char_p
 
-scaner_api.Utils_getMultiplePath.argtypes = [c_char_p]
-scaner_api.Utils_getMultiplePath.restype = POINTER(c_char_p)
+scanerAPI.Utils_getMultiplePath.argtypes = [c_char_p]
+scanerAPI.Utils_getMultiplePath.restype = POINTER(c_char_p)
 
-scaner_api.Simulation_InitParams.argtypes = [c_char_p, c_float]
-scaner_api.Simulation_Launch.restype = c_byte
-scaner_api.Simulation_LoadScenario.restype = c_byte
-scaner_api.Simulation_Play.restype = c_byte
-scaner_api.Simulation_Pause.restype = c_byte
-scaner_api.Simulation_UnLoad.restype = c_byte
-scaner_api.Simulation_Stop.restype = c_byte
-scaner_api.Simulation_KillAllProcesses.restype = c_byte
-scaner_api.Simulation_AllProcessesOk.restype = c_byte
-scaner_api.Simulation_WaitForState.restype = c_byte
-scaner_api.Simulation_StartProcess.restype = c_byte
-scaner_api.Simulation_GetProcessInfo.restype = c_byte
-scaner_api.Simulation_IsProcessAutoLaunched.restype = c_byte
-scaner_api.Simulation_Shutdown.restype = c_byte
-scaner_api.Simulation_setVarEnv.restype = c_byte
+scanerAPI.Simulation_InitParams.argtypes = [c_char_p, c_float]
+scanerAPI.Simulation_Launch.restype = c_byte
+scanerAPI.Simulation_LoadScenario.restype = c_byte
+scanerAPI.Simulation_Play.restype = c_byte
+scanerAPI.Simulation_Pause.restype = c_byte
+scanerAPI.Simulation_UnLoad.restype = c_byte
+scanerAPI.Simulation_Stop.restype = c_byte
+scanerAPI.Simulation_KillAllProcesses.restype = c_byte
+scanerAPI.Simulation_AllProcessesOk.restype = c_byte
+scanerAPI.Simulation_WaitForState.restype = c_byte
+scanerAPI.Simulation_StartProcess.restype = c_byte
+scanerAPI.Simulation_GetProcessInfo.restype = c_byte
+scanerAPI.Simulation_IsProcessAutoLaunched.restype = c_byte
+scanerAPI.Simulation_Shutdown.restype = c_byte
+scanerAPI.Simulation_setVarEnv.restype = c_byte
 
-Process_InitParams = scaner_api.Process_InitParams
-Process_Run = scaner_api.Process_Run
-Process_Wait = scaner_api.Process_Wait
-Process_GetState = scaner_api.Process_GetState
-Process_Close = scaner_api.Process_Close
-Process_GetId = scaner_api.Process_GetId
-Process_GetTime = scaner_api.Process_GetTime
-Process_OutputLevel = scaner_api.Process_OutputLevel
-Process_GetRecordDir = scaner_api.Process_GetRecordDir
+Process_InitParams = scanerAPI.Process_InitParams
+Process_Run = scanerAPI.Process_Run
+Process_Wait = scanerAPI.Process_Wait
+Process_GetState = scanerAPI.Process_GetState
+Process_Close = scanerAPI.Process_Close
+Process_GetId = scanerAPI.Process_GetId
+Process_GetTime = scanerAPI.Process_GetTime
+Process_OutputLevel = scanerAPI.Process_OutputLevel
+Process_GetRecordDir = scanerAPI.Process_GetRecordDir
 
-Com_registerEvent = scaner_api.Com_registerEvent
-Com_getTypeEvent = scaner_api.Com_getTypeEvent
-Com_getStateEventType = scaner_api.Com_getStateEventType
-Com_validateStateEvent = scaner_api.Com_validateStateEvent
-Com_getNextEvent = scaner_api.Com_getNextEvent
+Com_registerEvent = scanerAPI.Com_registerEvent
+Com_getTypeEvent = scanerAPI.Com_getTypeEvent
+Com_getStateEventType = scanerAPI.Com_getStateEventType
+Com_validateStateEvent = scanerAPI.Com_validateStateEvent
+Com_getNextEvent = scanerAPI.Com_getNextEvent
 
-Com_getMessageEventDataInterface = scaner_api.Com_getMessageEventDataInterface
-Com_getMessageEventDataStringId = scaner_api.Com_getMessageEventDataStringId
-Com_declareInputData = scaner_api.Com_declareInputData
-Com_declareOutputData = scaner_api.Com_declareOutputData
-Com_releaseInterface = scaner_api.Com_releaseInterface
-Com_updateInputs = scaner_api.Com_updateInputs
-Com_updateOutputs = scaner_api.Com_updateOutputs
-Com_getShortData = scaner_api.Com_getShortData
-Com_getCharData = scaner_api.Com_getCharData
-Com_getFloatData = scaner_api.Com_getFloatData
-Com_getDoubleData = scaner_api.Com_getDoubleData
-Com_getLongData = scaner_api.Com_getLongData
-Com_getStringData = scaner_api.Com_getStringData
-Com_setShortData = scaner_api.Com_setShortData
-Com_setCharData = scaner_api.Com_setCharData
-Com_setFloatData = scaner_api.Com_setFloatData
-Com_setDoubleData = scaner_api.Com_setDoubleData
-Com_setStringData = scaner_api.Com_setStringData
-Com_setLongData = scaner_api.Com_setLongData
-Com_getFieldInfoArray = scaner_api.Com_getFieldInfoArray
-Com_getFieldNumber = scaner_api.Com_getFieldNumber
-Com_getInitConditions = scaner_api.Com_getInitConditions
+Com_getMessageEventDataInterface = scanerAPI.Com_getMessageEventDataInterface
+Com_getMessageEventDataStringId = scanerAPI.Com_getMessageEventDataStringId
+Com_declareInputData = scanerAPI.Com_declareInputData
+Com_declareOutputData = scanerAPI.Com_declareOutputData
+Com_releaseInterface = scanerAPI.Com_releaseInterface
+Com_updateInputs = scanerAPI.Com_updateInputs
+Com_updateOutputs = scanerAPI.Com_updateOutputs
+Com_getShortData = scanerAPI.Com_getShortData
+Com_getCharData = scanerAPI.Com_getCharData
+Com_getFloatData = scanerAPI.Com_getFloatData
+Com_getDoubleData = scanerAPI.Com_getDoubleData
+Com_getLongData = scanerAPI.Com_getLongData
+Com_getStringData = scanerAPI.Com_getStringData
+Com_setShortData = scanerAPI.Com_setShortData
+Com_setCharData = scanerAPI.Com_setCharData
+Com_setFloatData = scanerAPI.Com_setFloatData
+Com_setDoubleData = scanerAPI.Com_setDoubleData
+Com_setStringData = scanerAPI.Com_setStringData
+Com_setLongData = scanerAPI.Com_setLongData
+Com_getFieldInfoArray = scanerAPI.Com_getFieldInfoArray
+Com_getFieldNumber = scanerAPI.Com_getFieldNumber
+Com_getInitConditions = scanerAPI.Com_getInitConditions
 
-Utils_getPath = scaner_api.Utils_getPath
-Utils_getMultiplePath = scaner_api.Utils_getMultiplePath
-Utils_releaseChar = scaner_api.Utils_releaseChar
+Utils_getPath = scanerAPI.Utils_getPath
+Utils_getMultiplePath = scanerAPI.Utils_getMultiplePath
+Utils_releaseChar = scanerAPI.Utils_releaseChar
 
-Simulation_InitParams = scaner_api.Simulation_InitParams
-#Simulation_Close = scaner_api.Simulation_Close
+Simulation_InitParams = scanerAPI.Simulation_InitParams
+#Simulation_Close = scanerAPI.Simulation_Close
 
-Simulation_Launch = scaner_api.Simulation_Launch
-Simulation_LoadScenario = scaner_api.Simulation_LoadScenario
-Simulation_Play = scaner_api.Simulation_Play
-Simulation_Pause = scaner_api.Simulation_Pause
-Simulation_UnLoad = scaner_api.Simulation_UnLoad
-Simulation_Stop = scaner_api.Simulation_Stop
+Simulation_Launch = scanerAPI.Simulation_Launch
+Simulation_LoadScenario = scanerAPI.Simulation_LoadScenario
+Simulation_Play = scanerAPI.Simulation_Play
+Simulation_Pause = scanerAPI.Simulation_Pause
+Simulation_UnLoad = scanerAPI.Simulation_UnLoad
+Simulation_Stop = scanerAPI.Simulation_Stop
 
-Simulation_KillAllProcesses = scaner_api.Simulation_KillAllProcesses
-Simulation_AllProcessesOk = scaner_api.Simulation_AllProcessesOk
-Simulation_WaitForState = scaner_api.Simulation_WaitForState
-Simulation_StartProcess = scaner_api.Simulation_StartProcess
-Simulation_KillProcess = scaner_api.Simulation_KillProcess
-Simulation_KillProcesses = scaner_api.Simulation_KillProcesses
-Simulation_UpdateProcessInfo = scaner_api.Simulation_UpdateProcessInfo
-Simulation_getProcessNumber = scaner_api.Simulation_getProcessNumber
-Simulation_getAllProcessInfo = scaner_api.Simulation_getAllProcessInfo
-Simulation_GetProcessInfo = scaner_api.Simulation_GetProcessInfo
-Simulation_GetIdFromName = scaner_api.Simulation_GetIdFromName
-Simulation_IsProcessAutoLaunched = scaner_api.Simulation_IsProcessAutoLaunched
-Simulation_Shutdown = scaner_api.Simulation_Shutdown
-Simulation_ChangeConfig = scaner_api.Simulation_ChangeConfig
-Simulation_setVarEnv = scaner_api.Simulation_setVarEnv
+Simulation_KillAllProcesses = scanerAPI.Simulation_KillAllProcesses
+Simulation_AllProcessesOk = scanerAPI.Simulation_AllProcessesOk
+Simulation_WaitForState = scanerAPI.Simulation_WaitForState
+Simulation_StartProcess = scanerAPI.Simulation_StartProcess
+Simulation_KillProcess = scanerAPI.Simulation_KillProcess
+Simulation_KillProcesses = scanerAPI.Simulation_KillProcesses
+Simulation_UpdateProcessInfo = scanerAPI.Simulation_UpdateProcessInfo
+Simulation_getProcessNumber = scanerAPI.Simulation_getProcessNumber
+Simulation_getAllProcessInfo = scanerAPI.Simulation_getAllProcessInfo
+Simulation_GetProcessInfo = scanerAPI.Simulation_GetProcessInfo
+Simulation_GetIdFromName = scanerAPI.Simulation_GetIdFromName
+Simulation_IsProcessAutoLaunched = scanerAPI.Simulation_IsProcessAutoLaunched
+Simulation_Shutdown = scanerAPI.Simulation_Shutdown
+Simulation_ChangeConfig = scanerAPI.Simulation_ChangeConfig
+Simulation_setVarEnv = scanerAPI.Simulation_setVarEnv
 
 #enum
 (PS_DEAD,
@@ -286,6 +285,7 @@ def state_string(state):
         return "READY"
     if state == PS_RUNNING:
         return "RUNNING"
+
 
 OL_Notify = 1
 OL_Debug = 2
@@ -419,44 +419,44 @@ def print_info_message(data_interface):
     print (get_message_description(data_interface))
     
 def get_message_description(data_interface):
-    nb_field = scaner_api.Com_getFieldNumber(data_interface);
+    nb_field = scanerAPI.Com_getFieldNumber(data_interface);
     if nb_field == 0:
         return ""
 
     description_string = ""
     field_info_array = (FieldInfo * nb_field)();
-    if scaner_api.Com_getFieldInfoArray(data_interface, field_info_array) != 0:
+    if scanerAPI.Com_getFieldInfoArray(data_interface, field_info_array) != 0:
         for i in range(nb_field):
             description_string = description_string + '\t' + field_info_array[i].name + " type of " + field_info_array[i].type_name + '\n'
             
     return description_string
 
 def print_set_itinerary(data_interface):
-    id = scaner_api.Com_getShortData(data_interface, 'vhlId')
+    id = scanerAPI.Com_getShortData(data_interface, 'vhlId')
     print ('id ', id)
-    add = scaner_api.Com_getCharData(data_interface, 'add')
+    add = scanerAPI.Com_getCharData(data_interface, 'add')
     print ('add ', ord(add))
-    directions = scaner_api.Com_getShortData(data_interface, 'directionsCount')
+    directions = scanerAPI.Com_getShortData(data_interface, 'directionsCount')
     print ('directionsCount ', directions)
     
     for direction in range(directions):
-        dir = scaner_api.Com_getCharData(data_interface, 'directions['+str(direction)+']')
+        dir = scanerAPI.Com_getCharData(data_interface, 'directions['+str(direction)+']')
         print ('directions['+str(direction)+'] ', ord(dir))
 
 def print_path(data_interface):
-    id = scaner_api.Com_getShortData(data_interface, 'vhlId')
+    id = scanerAPI.Com_getShortData(data_interface, 'vhlId')
     print ('id ', id)
-    directions = scaner_api.Com_getShortData(data_interface, 'directionsCount')
+    directions = scanerAPI.Com_getShortData(data_interface, 'directionsCount')
     print ('directionsCount ', directions)
     
     for direction in range(directions):
-        dir = scaner_api.Com_getCharData(data_interface, 'directions['+str(direction)+']/direction')
+        dir = scanerAPI.Com_getCharData(data_interface, 'directions['+str(direction)+']/direction')
         print ('directions['+str(direction)+']/direction ', ord(dir))
-        intersection = scaner_api.Com_getLongData(data_interface, 'directions['+str(direction)+']/intersection')
+        intersection = scanerAPI.Com_getLongData(data_interface, 'directions['+str(direction)+']/intersection')
         print ('directions['+str(direction)+']/intersection ', intersection)
         
 def print_infra_position(data_interface):
-    id = scaner_api.Com_getShortData(data_interface, 'id')
+    id = scanerAPI.Com_getShortData(data_interface, 'id')
     print ('id ', id)
     x = Com_getFloatData(data_interface, 'x')
     y = Com_getFloatData(data_interface, 'y')
@@ -468,11 +468,11 @@ def print_infra_position(data_interface):
     print ('(', h, ' ', p, ' ', r, ')')
     
 def print_collision(data_interface):
-    type = scaner_api.Com_getShortData(data_interface, 'collisionType')
+    type = scanerAPI.Com_getShortData(data_interface, 'collisionType')
     print ('type ', type)
-    id1 = scaner_api.Com_getShortData(data_interface, 'id1')
+    id1 = scanerAPI.Com_getShortData(data_interface, 'id1')
     print ('id1 ', id1)
-    id2 = scaner_api.Com_getShortData(data_interface, 'id2')
+    id2 = scanerAPI.Com_getShortData(data_interface, 'id2')
     print ('id2 ', id2)
     
     x = Com_getFloatData(data_interface, 'point1_X')
