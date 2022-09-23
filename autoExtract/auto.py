@@ -1,20 +1,27 @@
-import os
-import signal
+from tkinter import *
 
-import wmi
+class Window:
+    def __init__(self,master):
+        self.master = master
 
-ANALYSING_TOOL = "AnalysingTool"
+        self.headerframe = Frame(self.master)
 
-w = wmi.WMI()
-appNames = [f"{p.Name}".replace(".exe","") for p in w.Win32_Process()]#check if the Analysis tool is running or not
-appPids = [f"{p.ProcessId}" for p in w.Win32_Process()]#check if the Analysis tool is running or not
+        self.header = Label(self.headerframe,text="Description",font="Tahoma 15 bold")
+        self.header.pack()
 
-apps = dict(zip(appNames,appPids))
+        self.description = Label(self.headerframe,text="Use this application to configure the automatic exporting of data from SCANeR Studio.",font="Tahoma 13")
+        self.description.pack()
 
+        self.instructions = Label(self.headerframe,text="Instructions:",font="Tahoma 13")
+        self.instructions.pack()
 
+        self.headerframe.grid(row=0,column=0,columnspan=6)
+        
 
-print(apps)
+root = Tk()
+window = Window(root)
 
-# C:\OKTAL\SCANeRstudio_1.6\bin\x64\AnalysingTool.exe -c DRIVER_DS_1.6 C:/OKTAL/SCANeRstudio_1.6/data/GUELPH_DATA_1.6/record/MTO_MWPractice - Copy-31_01_2018-17h54m37s/MTO_MWPractice - Copy-31_01_2018-17h54m37s.recprj
-
-#AnalysingTool.exe -c DRIVER_DS_1.6 "C:/OKTAL/SCANeRstudio_1.6/data/GUELPH_DATA_1.6/record/MTO_MWPractice - Copy-31_01_2018-17h54m37s/MTO_MWPractice - Copy-31_01_2018-17h54m37s.recprj"
+root.resizable(False,False)
+root.title("Automatic Extracter")
+root.minsize(550,700)
+root.mainloop()
