@@ -684,7 +684,7 @@
     },
     "getLaneLateralShift":{
         "name":"Lane Gap",
-        "function":"mice.getLaneLateralShift(%s,\"CENTER\")",
+        "function":"mice.getLaneLateralShift(%s,0)",
         "class":"Custom",
         "description":"This custom function calculates the measurement for Lane Weaving by adding the y position of the vehicle to the lane width",
         "argc":1,
