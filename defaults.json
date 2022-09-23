@@ -681,5 +681,15 @@
         "argv":{
             "Vehicle ID":0
         }
+    },
+    "measureLaneWeaving":{
+        "name":"Lane Weaving",
+        "function":"mice.getPositionVector(0,1) + mice.getLaneWidth()",
+        "class":"Custom",
+        "description":"This custom function calculates the measurement for Lane Weaving by adding the y position of the vehicle to the lane width",
+        "argc":1,
+        "argv":{
+            "Vehicle ID":0
+        }
     }
   }
