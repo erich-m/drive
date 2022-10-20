@@ -3,6 +3,7 @@
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
+from tkinter import filedialog
 
 #import packages for file and data management
 import configparser
@@ -21,7 +22,7 @@ class Window:
         self.recent = ""
         self.finallist = currentconfig
 
-        for s  in range(1,15,2):
+        for s  in range(1,17,2):
             self.separator = ttk.Separator(self.master,orient="horizontal")
             self.separator.grid(row=s,column=0,columnspan=6,sticky="ew",pady=5)
 
@@ -81,7 +82,7 @@ class Window:
         self.scrollbarleft.config(command=self.includelist.yview)
 
         self.leftframe.pack(side="left",fill=BOTH,padx=30)
-        self.centerframe.grid(row=2,column=0,columnspan=6)
+        self.centerframe.grid(row=2,column=0,columnspan=6)###ADDING TO GRID
 
         #list manager buttons
         self.listmanagerbuttons = Frame(self.master)
@@ -93,7 +94,37 @@ class Window:
         self.down.grid(row=0,column=2,columnspan=1,padx=2)
         self.add = Button(self.listmanagerbuttons,text="<-- ADD",font=config.get('guidata','bodyfont'),command=self.__addinclude,width=15)
         self.add.grid(row=0,column=3,columnspan=1,padx=2)
-        self.listmanagerbuttons.grid(row=4,column=0,columnspan=6)
+        self.listmanagerbuttons.grid(row=4,column=0,columnspan=6)###ADDING TO GRID
+
+        self.statenameframe = Frame(self.master)
+
+        self.statenamedesc = Label(self.statenameframe,text="The current state of the data configuration will be saved under the given file name:",font=config.get('guidata','smallfont'))
+        self.statenamedesc.pack(side="top",fill=BOTH)
+
+        self.statename = Label(self.statenameframe, text = "Save as: ",font=config.get('guidata','smallfont'),anchor="e")
+        self.statename.pack(side="left",fill=BOTH,expand=True)
+
+        self.stateentry = Entry(self.statenameframe,font=config.get('guidata','smallfont'))
+        self.stateentry.insert("1",config.get('general','state'))
+        self.stateentry.pack(side="left",fill=BOTH,expand=True)
+
+        self.statesuffix = Label(self.statenameframe,text=config.get('fixed','config'),font=config.get('guidata','smallfont'),anchor="w")
+        self.statesuffix.pack(side="left",fill=BOTH,expand=True)
+
+        self.statesave = Button(self.statenameframe,text="Save State of Data Configuration",font=config.get('guidata','bodyfont'),bg='cyan',command=self.__savestate)
+        self.statesave.pack(side="right",padx=10)
+        self.statenameframe.grid(row=6,column=0,columnspan=6,sticky="ew")###ADDING TO GRID
+
+        self.browseframe = Frame(self.master)
+
+        self.browselabel = Label(self.browseframe,text="Browse for saved configurations:",font=config.get('guidata','smallfont'),anchor="e")
+        self.browselabel.pack(side="left",fill=BOTH,expand=True)
+
+        self.browsebutton = Button(self.browseframe,text="Load Saved Configuration",font=config.get('guidata','bodyfont'),bg='yellow',command=self.__browseconfigs)
+        self.browsebutton.pack(side="right",fill=BOTH,expand=True,padx=10)
+        
+        self.browseframe.grid(row=8,column=0,columnspan=6,sticky="ew")###ADDING TO GRID
+
 
         self.propframe = Frame(self.master)
         self.propheader = Label(self.propframe,text="Field Properties",font=config.get('guidata','headerfont'),anchor="w")
@@ -122,7 +153,7 @@ class Window:
         self.noentry.pack()
         self.field.pack()
 
-        self.propframe.grid(row=6,column=0,columnspan=6,sticky="ew")
+        self.propframe.grid(row=10,column=0,columnspan=6,sticky="ew")###ADDING TO GRID
 
         self.filenameframe = Frame(self.master)
 
@@ -139,20 +170,24 @@ class Window:
         self.suffix = Label(self.filenameframe,text=config.get('fixed','suffix'),font=config.get('guidata','smallfont'),anchor="w")
         self.suffix.pack(side="left",fill=BOTH,expand=True)
         
-        self.filenameframe.grid(row=8,column=0,columnspan=6,sticky="ew")
+        self.filenameframe.grid(row=12,column=0,columnspan=6,sticky="ew")###ADDING TO GRID
 
         #save and cancel buttons
         self.exitframe = Frame(self.master)
+
+        self.masterlabel = Label(self.exitframe,text="Master Save: SCANeR Studio Will Collect Data With Above Configuration",font=config.get('guidata','smallfont'))
+        self.masterlabel.pack(side="top")
+        
         self.save = Button(self.exitframe,text="Save Configuration",font=config.get('guidata','bodyfont'),bg='green',command=self.__savebox)
-        self.save.pack(side="left",fill=BOTH,padx=50,pady=5)
+        self.save.pack(side="left",fill=BOTH,padx=50,pady=2)
 
         self.save = Button(self.exitframe,text="Cancel Configuration",font=config.get('guidata','bodyfont'),bg='red',command=self.__cancelbox)
-        self.save.pack(side="right",fill=BOTH,padx=50,pady=5)
-        self.exitframe.grid(row=10,column=0,columnspan=6)
+        self.save.pack(side="right",fill=BOTH,padx=50,pady=2)
+        self.exitframe.grid(row=14,column=0,columnspan=6)###ADDING TO GRID
 
         #separator
         self.separator6 = ttk.Separator(self.master,orient="horizontal")
-        self.separator6.grid(row=11,column=0,columnspan=6,sticky="ew",pady=5)
+        self.separator6.grid(row=15,column=0,columnspan=6,sticky="ew",pady=5)###ADDING TO GRID
         
         self.filelocationframe = Frame(self.master)
         #file location
@@ -161,7 +196,7 @@ class Window:
 
         self.opendata = Button(self.filelocationframe,text="Open File Location",font=config.get('guidata','smallfont'),command=self.__openfilelocation)
         self.opendata.pack(side="bottom")
-        self.filelocationframe.grid(row=12,column=0,columnspan=6,sticky="ew")
+        self.filelocationframe.grid(row=16,column=0,columnspan=6,sticky="ew")###ADDING TO GRID
 
     def __update(self,directed):
         leftselect = self.includelist.curselection()
@@ -231,6 +266,26 @@ class Window:
     def __openfilelocation(self):
         subprocess.Popen(config.get('guipaths','opendata'))
 
+    def __browseconfigs(self):
+        selectedstate = filedialog.askopenfilename(initialdir=((config.get('guipaths','configurations'),os.getcwd() + '\\' + config.get('alternatepaths','configurations'))[auth]),filetypes=[("json configuration",".json")])
+        paths = selectedstate.split('/')
+        selectedstatename = paths[len(paths)-1].split('.')[0]
+        self.stateentry.delete(0,END)
+        self.stateentry.insert("1",selectedstatename)
+        try:
+            newstate = (json.load((open(selectedstate,encoding="utf8")),object_pairs_hook=OrderedDict)).values()
+                       
+        except:
+            messagebox.showerror("Error Reading Configuration","Please make sure this is a valid configuration file for this tool")
+        self.includelist.delete(0,END)
+
+        for n in range(len(newstate)):
+            self.includelist.insert(n,list(newstate)[n]["name"])
+
+        del self.finallist[:]
+        self.finallist = list(newstate)
+        # print(self.finallist)
+
     def __cancelbox(self):
         cancel = messagebox.askquestion('Cancelling...','Cancelling will not save any configurations. Do you wish to cancel?',icon='warning')
         if cancel == 'yes':
@@ -254,7 +309,6 @@ class Window:
             func["argv"] = dict(zip(list(func["argv"].keys()),fielddata))
             # print(func)
             self.finallist.append(func.copy())
-            print(self.finallist)
             # print(self.finallist)
         except Exception:
             pass
@@ -299,38 +353,81 @@ class Window:
         finalwrite = dict(zip(functionnames,self.finallist))
 
         nameoffile = self.nameentry.get()
+        stateoffile = self.stateentry.get()
 
-
-        #TODO: Check and update the file name
         badchars = "\/:*?<>|"
         if not any(c in nameoffile for c in badchars):
             config.set('general','name',nameoffile)
+            config.set('general','state',stateoffile)
             with open("settings.cfg","w") as configfile:
                 config.write(configfile)
 
             # print(finalwrite)
-            with open(config.get('guipaths','included'),"w") as included:
+            with open((config.get('guipaths','included'),os.getcwd() + '\\' + config.get('alternatepaths','included'))[auth],"w") as included:
                 json.dump(finalwrite,included)
 
             messagebox.showwarning('Saving...','All settings are unverfied and may not operate as intended. Errors may arise during simulation process',icon='info')
             self.master.destroy()
         else:
             messagebox.showerror('Save Failed','File names cannot contain any of the following characters: \/:*?<>|')
+    
+    #this function saes the current configuration of data lists to a json file so that multipe different data configurations can be created
+    #linked to statesave button in state frame
+    def __savestate(self):
+        functionnames = list(range(len(self.finallist)))
+        finalwrite = dict(zip(functionnames,self.finallist))
 
+        stateoffile = self.stateentry.get()
+        statefilename = stateoffile + config.get('fixed','config')
+        configsfolder = (config.get('guipaths','configurations'),os.getcwd() + '\\' + config.get('alternatepaths','configurations'))[auth]
+
+        badchars = "\/:*?<>|"
+
+        stateready = (True,False)#state save ready,message displayed for error
+        if any(c in stateoffile for c in badchars):
+            messagebox.showerror('State Save Failed','File names cannot contain any of the following characters: \/:*?<>|')
+            stateready = (False,True)
+        if statefilename in os.listdir(configsfolder) and stateready == (True,False):
+            check = messagebox.askokcancel('State Save Warning','State file name already exists. Overwrite existing file?',icon='warning')
+            if check:
+                stateready = (True,True)
+            else:
+                stateready = (False,True)
+        if stateready == (True,False) or stateready == (True,True):
+            # print("saving to file")
+            with open(configsfolder + "\\" + statefilename,"w") as included:
+                json.dump(finalwrite,included)
+
+            messagebox.showinfo('State Saved Successfully','Current configuration saved to file')
+        elif stateready == (False,False):
+            messagebox.showerror('State Save Failed','State save failed due to unknown errors')
+auth = -1
 def initpath():#initialize the path to the directory that SCANeR Studio uses
-    if str(os.getcwd()) != 'C:\\OKTAL\\SCANeRstudio_1.6\\data\GUELPH_DATA_1.6\\script\\python':
-            os.chdir('C:\\OKTAL\\SCANeRstudio_1.6\\data\GUELPH_DATA_1.6\\script\\python')#this is the path that the python directory should be working from
+    if str(os.environ['COMPUTERNAME']) == 'SUPERVISION':
+        #verfied OKTAL directory
+        os.chdir('C:\\OKTAL\\SCANeRstudio_1.6\\data\GUELPH_DATA_1.6\\script\\python')#this is the path that the python directory should be working from
+        auth = 0
+    elif 'dont_remove_this_directory.txt' in os.listdir('.'):
+        print("verified alternate directory")
+        auth = 1
+    else:
+        print("Aborting. Could not find a verfied directory")
+        quit()
+
 
 initpath()#initializes the working directory
 #set up the configuration file parser
 config = configparser.ConfigParser()
 config.read("settings.cfg")
 
-#defaults are read into a list of function dictionary definitions
-defaults = (json.load((open(config.get('guipaths','defaults'),encoding="utf8")),object_pairs_hook=OrderedDict)).values()
+#defaults are read into a list of function dictionary definitions.
+#if the auth is 0, that means it is on a verified OKTAL computer (such as supervisor computer) and will use supervisor path
+#if auth is 1, the path is confiured to use the current working directory and still use the correct files. auth=1 is more unstable though, functional
+#auth verification applied to the included as well
+defaults = (json.load((open((config.get('guipaths','defaults'),os.getcwd() + '\\' + config.get('alternatepaths','defaults'))[auth],encoding="utf8")),object_pairs_hook=OrderedDict)).values()
 fields = [h["name"] for h in defaults if "name" in h]#fields are the function names accessed by the field name
 
-included = list((json.load((open(config.get('guipaths','included'),encoding="utf8")),object_pairs_hook=OrderedDict)).values())
+included = list((json.load((open((config.get('guipaths','included'),os.getcwd() + '\\' + config.get('alternatepaths','included'))[auth],encoding="utf8")),object_pairs_hook=OrderedDict)).values())
 
 root = Tk()
 window = Window(root,included)
