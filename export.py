@@ -404,6 +404,7 @@ class Window:
             messagebox.showinfo('State Saved Successfully','Current configuration saved to file')
         elif stateready == (False,False):
             messagebox.showerror('State Save Failed','State save failed due to unknown errors')
+
 auth = -1
 def initpath():#initialize the path to the directory that SCANeR Studio uses
     if str(os.environ['COMPUTERNAME']) == 'SUPERVISION':
@@ -439,4 +440,5 @@ root.resizable(False,False)
 root.title(config.get('guidata','main'))
 root.iconbitmap("export.ico")
 root.minsize(config.get('guidata','width'),config.get('guidata','height'))
+root.protocol("WM_DELETE_WINDOW", oncloseevent)
 root.mainloop()
