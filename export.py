@@ -267,24 +267,27 @@ class Window:
         subprocess.Popen(config.get('guipaths','opendata'))
 
     def __browseconfigs(self):
+        selectedstate = None
         selectedstate = filedialog.askopenfilename(initialdir=((config.get('guipaths','configurations'),os.getcwd() + '\\' + config.get('alternatepaths','configurations'))[auth]),filetypes=[("json configuration",".json")])
-        paths = selectedstate.split('/')
-        selectedstatename = paths[len(paths)-1].split('.')[0]
-        self.stateentry.delete(0,END)
-        self.stateentry.insert("1",selectedstatename)
-        try:
-            newstate = (json.load((open(selectedstate,encoding="utf8")),object_pairs_hook=OrderedDict)).values()
-                       
-        except:
-            messagebox.showerror("Error Reading Configuration","Please make sure this is a valid configuration file for this tool")
-        self.includelist.delete(0,END)
+        
+        if selectedstate != "":
+            paths = selectedstate.split('/')
+            selectedstatename = paths[len(paths)-1].split('.')[0]
+            self.stateentry.delete(0,END)
+            self.stateentry.insert("1",selectedstatename)
+            try:
+                newstate = (json.load((open(selectedstate,encoding="utf8")),object_pairs_hook=OrderedDict)).values()
+                        
+            except:
+                messagebox.showerror("Error Reading Configuration","Please make sure this is a valid configuration file for this tool")
+            self.includelist.delete(0,END)
 
-        for n in range(len(newstate)):
-            self.includelist.insert(n,list(newstate)[n]["name"])
+            for n in range(len(newstate)):
+                self.includelist.insert(n,list(newstate)[n]["name"])
 
-        del self.finallist[:]
-        self.finallist = list(newstate)
-        # print(self.finallist)
+            del self.finallist[:]
+            self.finallist = list(newstate)
+            # print(self.finallist)
 
     def __cancelbox(self):
         cancel = messagebox.askquestion('Cancelling...','Cancelling will not save any configurations. Do you wish to cancel?',icon='warning')
@@ -401,6 +404,7 @@ class Window:
             messagebox.showinfo('State Saved Successfully','Current configuration saved to file')
         elif stateready == (False,False):
             messagebox.showerror('State Save Failed','State save failed due to unknown errors')
+
 auth = -1
 def initpath():#initialize the path to the directory that SCANeR Studio uses
     if str(os.environ['COMPUTERNAME']) == 'SUPERVISION':
@@ -408,7 +412,7 @@ def initpath():#initialize the path to the directory that SCANeR Studio uses
         os.chdir('C:\\OKTAL\\SCANeRstudio_1.6\\data\GUELPH_DATA_1.6\\script\\python')#this is the path that the python directory should be working from
         auth = 0
     elif 'dont_remove_this_directory.txt' in os.listdir('.'):
-        print("verified alternate directory")
+        #print("verified alternate directory")
         auth = 1
     else:
         print("Aborting. Could not find a verfied directory")
@@ -436,4 +440,5 @@ root.resizable(False,False)
 root.title(config.get('guidata','main'))
 root.iconbitmap("export.ico")
 root.minsize(config.get('guidata','width'),config.get('guidata','height'))
+root.protocol("WM_DELETE_WINDOW", oncloseevent)
 root.mainloop()
