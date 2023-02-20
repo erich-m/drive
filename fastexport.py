@@ -119,7 +119,6 @@ def main():
     results = map(eval,calls)
     #take the header and the results and join the arrays into a key value pair 
     data = dict(zip(headers,results))
-
     writer.writedata(data)#write the data to the csv using class method
 
     writer.writerclose()#close the file
