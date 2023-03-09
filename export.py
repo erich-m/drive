@@ -405,7 +405,7 @@ class Window:
         elif stateready == (False,False):
             messagebox.showerror('State Save Failed','State save failed due to unknown errors')
 
-auth = 0
+auth = 1
 def initpath():#initialize the path to the directory that SCANeR Studio uses
     if str(os.environ['COMPUTERNAME']) == 'SUPERVISION':
         #verfied OKTAL directory
