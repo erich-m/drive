@@ -92,12 +92,15 @@ def main():
             print(p)
         print(dir(mice))
 
+
         #set up the file name from the configuration settings file
         folder = config.get('fixed','folder')#get folder name from config
         name = config.get('general','name')#get file name from config
         code = dt.now().strftime("%Y%j%H%M%S")#get timestamp for the csv file formatted as: year, day of year, time
         suffix = config.get('fixed','suffix')#get file type from config
         prepfile = folder + name + "-" + code + suffix#get the csv file that is set up
+        #this is where the file is created. Test to the file is created.a Test to chnge the folder from the config file#
+        print(prepfile)
 
         writer = customcsv(prepfile,config.get('fixed','delim'),headers)#create the new csv file
         writer.writeheaders()#write the headers
