@@ -99,6 +99,7 @@ def main():
         suffix = config.get('fixed','suffix')#get file type from config
         prepfile = folder + name + "-" + code + suffix#get the csv file that is set up
 
+
         writer = customcsv(prepfile,config.get('fixed','delim'),headers)#create the new csv file
         writer.writeheaders()#write the headers
 
