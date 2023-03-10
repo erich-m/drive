@@ -268,8 +268,8 @@ class Window:
 
     def __browseconfigs(self):
         selectedstate = None
-        selectedstate = filedialog.askopenfilename(initialdir=((config.get('guipaths','configurations'),os.getcwd() + '\\' + config.get('alternatepaths','configurations'))[auth]),filetypes=[("json configuration",".json")])
-        print(((config.get('guipaths','configurations'),os.getcwd() + '\\' + config.get('alternatepaths','configurations'))[auth]))
+        selectedstate = filedialog.askopenfilename(initialdir=(config.get('guipaths','configurations')),filetypes=[("json configuration",".json")])
+
         if selectedstate != "":
             paths = selectedstate.split('/')
             selectedstatename = paths[len(paths)-1].split('.')[0]
