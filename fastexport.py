@@ -106,8 +106,7 @@ def main():
         writer = customcsv(prepfile,config.get('fixed','delim'),headers)#create the new csv file
         writer.writeheaders()#write the headers
 
-        filepath = config.get('scanerpaths','recent') + prepfile#get full path for the csv file
-        config.set('scanerpaths','datafile',filepath)#set to the datapth field in the cfg file
+        config.set('scanerpaths','datafile',prepfile)#set to the datapth field in the cfg file
         with open(config.get('scanerpaths','configuration'),'w') as settings:
             config.write(settings)#write the new file name to the settings file
     #run export procedures to get the data from the simulation and then write it to the csv file
