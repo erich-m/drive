@@ -1,4 +1,4 @@
-# DRIVE LAB FASTEXPORT Project Version 1
+# DRIVE LAB FASTEXPORT Project Version 1 - Not Currently Maintained!!!
 
 ## Usage Details:
     This repo contains code and datasets for the University of Guelph DRiVE lab and integrations with SCANeR Studio. 
