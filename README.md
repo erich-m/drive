@@ -8,4 +8,10 @@ Project developed to bypass SCANeR Studio time-consuming export procedures. The 
 
 ## Usage
 
-[Export Confiugrator exe](exportconfigurator/export/export.exe) can be run locally on the user machine 
+[Export Confiugrator exe](exportconfigurator/export/export.exe) can be run locally on the user machine
+
+## Python Version
+
+***<span style="color:red">
+    This project is developed and maintained to be executed with Python version 3.7.2 and no compatibility with later versions is guaranteed
+</span>***
