@@ -8,4 +8,4 @@ Project developed to bypass SCANeR Studio time-consuming export procedures. The 
 
 ## Usage
 
-[exe]() can be run locally on the user machine 
+[exe](drive/exportconfigurator/export/) can be run locally on the user machine 
